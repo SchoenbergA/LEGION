@@ -43,7 +43,7 @@ vegInd_RGB<- function(rgb,indlist="all"){
 
   #check if raster is an 3 band layer
   if (raster::nlayers(rgb) != 3)
-    stop("Input raster has mor or less than 3 bands")
+    stop("Input raster has more or less than 3 bands")
   red <- rgb[[1]]
   green <- rgb[[2]]
   blue <- rgb[[3]]
