@@ -1,8 +1,8 @@
 #' vegInd_RGB
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param rgb a RasterStack or Brick with RGB bands
-#' @param indlist comma seperated character for desired Vegetation Indices to compute. Select from
-#' "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all
+#' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
+#' "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further informations)
 
 #' @return Returns a raster stack with the selected Vegetation Indices
 #' @details further description
@@ -12,18 +12,15 @@
 #' @references
 #' Meyer, H., Reudenbach, C., Hengl, T., Katurji, M., Nauß, T. (2018): Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation. Environmental Modelling & Software 101: 1-9.
 #' @examples # need to lern and test this
-#' library(GSIF)
-#' data(cookfarm)
-#' ### Prepare for 10-fold Leave-Location-and-Time-Out cross validation
-#' indices <- CreateSpacetimeFolds(cookfarm$readings,"SOURCEID","Date")
-#' str(indices)
-#' ### Prepare for 10-fold Leave-Location-Out cross validation
-#' indices <- CreateSpacetimeFolds(cookfarm$readings,spacevar="SOURCEID")
-#' str(indices)
-#' ### Prepare for leave-One-Location-Out cross validation
-#' indices <- CreateSpacetimeFolds(cookfarm$readings,spacevar="SOURCEID",
-#' k=length(unique(cookfarm$readings$SOURCEID)))
-#' str(indices)
+#' ### load data
+#' data(exp_rgb)
+#' ### compute all vegetation indizes
+#' x <-LEGION::vegInd(exp_rgb)
+#' plot(x)
+#' ### select specific vegetation indices
+#' vi <-c("VVI","SI","GLI")
+#' y <-LEGION::vegInd(exp_rgb,indlist=vi)
+#' plot(y)
 #' @export vegInd_RGB
 #' @aliases vegInd_RGB
 
@@ -137,12 +134,3 @@ vegInd_RGB<- function(rgb,indlist="all"){
 
   return(raster::stack(indices))
 }
-
-#rst <- raster::brick("C:/Envimaster/WoRldTReelines/src/001_exmpl_data/exp_RGB_A.tif")
-#crs(rst)
-#require(raster)
-#require(rgdal)
-#
-#test <- vegInd_RGB(rst,c("VVI","all"))
-#plot(test)
-#warnings()

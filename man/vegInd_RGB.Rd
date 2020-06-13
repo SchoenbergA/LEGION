@@ -9,8 +9,8 @@ vegInd_RGB(rgb, indlist = "all")
 \arguments{
 \item{rgb}{a RasterStack or Brick with RGB bands}
 
-\item{indlist}{comma seperated character for desired Vegetation Indices to compute. Select from
-"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all}
+\item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
+"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further informations)}
 }
 \value{
 Returns a raster stack with the selected Vegetation Indices
@@ -26,18 +26,15 @@ notes if needed
 }
 \examples{
 # need to lern and test this
-library(GSIF)
-data(cookfarm)
-### Prepare for 10-fold Leave-Location-and-Time-Out cross validation
-indices <- CreateSpacetimeFolds(cookfarm$readings,"SOURCEID","Date")
-str(indices)
-### Prepare for 10-fold Leave-Location-Out cross validation
-indices <- CreateSpacetimeFolds(cookfarm$readings,spacevar="SOURCEID")
-str(indices)
-### Prepare for leave-One-Location-Out cross validation
-indices <- CreateSpacetimeFolds(cookfarm$readings,spacevar="SOURCEID",
-k=length(unique(cookfarm$readings$SOURCEID)))
-str(indices)
+### load data
+data(exp_rgb)
+### compute all vegetation indizes
+x <-LEGION::vegInd(exp_rgb)
+plot(x)
+### select specific vegetation indices
+vi <-c("VVI","SI","GLI")
+y <-LEGION::vegInd(exp_rgb,indlist=vi)
+plot(y)
 }
 \references{
 Meyer, H., Reudenbach, C., Hengl, T., Katurji, M., Nauß, T. (2018): Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation. Environmental Modelling & Software 101: 1-9.
