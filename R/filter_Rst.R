@@ -10,14 +10,37 @@
 #' @details further description
 #' @note notes if needed
 #' @author Andreas Schönberg
-#' @seealso \code{\link{trainControl}},\code{\link{ffs}} ### link to other functions
-#' @references
-#' Meyer, H., Reudenbach, C., Hengl, T., Katurji, M., Nauß, T. (2018): Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation. Environmental Modelling & Software 101: 1-9.
-#' @examples # need to lern and test this
+#' @seealso \code{\link{focal}}
+#' @examples
+#' ### load data
+#' data(exp_rst)
+#' ### compute all filter
+#' x <- filter_Rst(exp_rst,sizes=c(3,5,7))
+#' plot(x[[]])
+#' ### compute specific filters
+#' flist <- c("modal","sobel_vert","mean")
+#' y <- filter_Rst(exp_rst,fLS=flist,sizes=c(3,5,7))
 #' @export filter_Rst
 #' @aliases filter_Rst
 
-filter_Rst <- function(rst,fLS,sizes){
+filter_Rst <- function(rst,fLS="all",sizes){
+
+  ### set default
+  if(fLS=="all"){
+    fLS <-c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel")
+  }else{fLS==fLS}
+
+  #create notin and check for wrong input
+  `%notin%` <- Negate(`%in%`)
+  if(any(fLS %notin% c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel"))) {
+    stop("wrong Filter selected or not supported")
+  }
+
+  #check for wrong sizes input
+  if(any(sizes %% 2 == 0)){
+    stop("sizes contain even values (use odd values only)")
+  }
+
   filterstk <-lapply(fLS, function(item){
 
     # sum filter
@@ -181,10 +204,4 @@ filter_Rst <- function(rst,fLS,sizes){
   return(raster::stack(unLS))
 
 } # end fun
-
-
-###
-###
-
-
 

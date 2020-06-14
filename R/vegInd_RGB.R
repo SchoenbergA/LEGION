@@ -8,14 +8,13 @@
 #' @details further description
 #' @note notes if needed
 #' @author Andreas Schönberg
-#' @seealso \code{\link{trainControl}},\code{\link{ffs}} ### link to other functions
 #' @references
-#' Meyer, H., Reudenbach, C., Hengl, T., Katurji, M., Nauß, T. (2018): Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation. Environmental Modelling & Software 101: 1-9.
-#' @examples # need to lern and test this
+#' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
+#' @examples
 #' ### load data
 #' data(exp_rgb)
 #' ### compute all vegetation indizes
-#' x <-LEGION::vegInd(exp_rgb)
+#' x <-LEGION::vegInd_RGB(exp_rgb)
 #' plot(x)
 #' ### select specific vegetation indices
 #' vi <-c("VVI","SI","GLI")

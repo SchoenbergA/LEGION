@@ -4,7 +4,7 @@
 \alias{filter_Rst}
 \title{filter_Rst}
 \usage{
-filter_Rst(rst, fLS, sizes)
+filter_Rst(rst, fLS = "all", sizes)
 }
 \arguments{
 \item{rst}{a single band raster layer}
@@ -28,13 +28,17 @@ further description
 notes if needed
 }
 \examples{
-# need to lern and test this
-}
-\references{
-Meyer, H., Reudenbach, C., Hengl, T., Katurji, M., Nauß, T. (2018): Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation. Environmental Modelling & Software 101: 1-9.
+### load data
+data(exp_rst)
+### compute all filter
+x <- filter_Rst(exp_rst,sizes=c(3,5,7))
+plot(x[[]])
+### compute specific filters
+flist <- c("modal","sobel_vert","mean")
+y <- filter_Rst(exp_rst,fLS=flist,sizes=c(3,5,7))
 }
 \seealso{
-\code{\link{trainControl}},\code{\link{ffs}} ### link to other functions
+\code{\link{focal}}
 }
 \author{
 Andreas Schönberg
