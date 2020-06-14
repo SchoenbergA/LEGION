@@ -26,7 +26,7 @@
 filter_Rst <- function(rst,fLS="all",sizes){
 
   ### set default
-  if(fLS=="all"){
+  if(any(fLS=="all")){
     fLS <-c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel")
   }else{fLS==fLS}
 
@@ -161,7 +161,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
         mx[is.na(mx)] = 0
         my[is.na(my)] = 0
 
-        sobel_hLS <- raster::focal(x, mx, fun = sum)
+        sobel_hLS <- raster::focal(rst, mx, fun = sum)
         names(sobel_hLS) <- paste0(names(rst),"_sobel_h" ,as.factor(f))
         return(sobel_hLS)
       })
@@ -186,7 +186,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
         mx[is.na(mx)] = 0
         my[is.na(my)] = 0
 
-        sobel_vLS <- raster::focal(x, mx, fun = sum)
+        sobel_vLS <- raster::focal(rst, mx, fun = sum)
         names(sobel_vLS) <- paste0(names(rst),"_sobel_v" ,as.factor(f))
         return(sobel_vLS)
       })
