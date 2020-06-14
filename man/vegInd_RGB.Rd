@@ -2,7 +2,7 @@
 % Please edit documentation in R/vegInd_RGB.R
 \name{vegInd_RGB}
 \alias{vegInd_RGB}
-\title{vegInd_RGB}
+\title{calculate RGB vegetation indices}
 \usage{
 vegInd_RGB(rgb, indlist = "all")
 }

@@ -1,4 +1,4 @@
-#' filter_Rst
+#' filter single band raster
 #' @description calculates several filters for a single raster
 #' @param rst a single band raster layer
 #' @param fLS comma separated character for desired filter functions. Select from
@@ -7,7 +7,18 @@
 #' @param sizes numeric values for the moving window, must be odd
 
 #' @return Returns a raster stack with the selected filters
-#' @details further description
+#' @details
+#' ## Subsection within details
+#' ### Sub-subsection
+#' ... text ...Filter arguments:
+#' * "sum" - Sum of all cells in MovingWindow
+#' * "min" - minimum value
+#' * "max" - maximum vlaue
+#' 1. sd"  - standart deviation
+#' 2. modal"- modal
+#' 3 . sobel" - sobel filter in horizontal and vertical directions
+#' | "sobel_hrzt"| - horizontal only
+#' | "sobel_vert"| - vertical only
 #' @note notes if needed
 #' @author Andreas Schönberg
 #' @seealso \code{\link{focal}}

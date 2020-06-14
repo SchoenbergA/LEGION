@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_Stk.R
 \name{filter_Stk}
 \alias{filter_Stk}
-\title{filter_Stk}
+\title{wrapper for 'filter_Rst' to filter RasterStacks}
 \usage{
 filter_Stk(stk, fLS = "all", sizes, layernames = names(stk))
 }

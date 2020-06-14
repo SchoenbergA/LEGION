@@ -1,4 +1,4 @@
-#' vegInd_RGB
+#' calculate RGB vegetation indices
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param rgb a RasterStack or Brick with RGB bands
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from

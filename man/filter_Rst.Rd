@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_Rst.R
 \name{filter_Rst}
 \alias{filter_Rst}
-\title{filter_Rst}
+\title{filter single band raster}
 \usage{
 filter_Rst(rst, fLS = "all", sizes)
 }
@@ -22,7 +22,25 @@ Returns a raster stack with the selected filters
 calculates several filters for a single raster
 }
 \details{
-further description
+\subsection{Subsection within details}{
+\subsection{Sub-subsection}{
+
+... text ...Filter arguments:
+\itemize{
+\item "sum" - Sum of all cells in MovingWindow
+\item "min" - minimum value
+\item "max" - maximum vlaue
+}
+\enumerate{
+\item sd"  - standart deviation
+\item modal"- modal
+3 . sobel" - sobel filter in horizontal and vertical directions
+| "sobel_hrzt"| - horizontal only
+| "sobel_vert"| - vertical only
+}
+}
+
+}
 }
 \note{
 notes if needed

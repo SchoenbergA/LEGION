@@ -1,4 +1,4 @@
-#' filter_Stk
+#' wrapper for 'filter_Rst' to filter RasterStacks
 #' @description calculates several filters for each Single Raster in a RasterStack
 #' @param Stk a Raster Stack
 #' @param fLS comma separated character for desired filter functions. Select from
