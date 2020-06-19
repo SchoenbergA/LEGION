@@ -5,7 +5,7 @@ Authors@R:
     person(given = "Andreas",
            family = "Schönberg",
            role = c("aut", "cre"),
-           email = "Schoenb4@students.uni-marburg.de",
+           email = "Schoenb4@students.uni-marburg.de")
 Description: tool for computing artifically layers.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
