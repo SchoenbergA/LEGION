@@ -24,7 +24,18 @@ Returns a raster stack with the selected filters
 calculates several filters for each Single Raster in a RasterStack
 }
 \details{
-further description
+\subsection{available filter methods}{
+\itemize{
+\item "sum" - Sum of all cells in Moving Window
+\item "min" - minimum value in Moving Window
+\item "max" - maximum value in Moving Window
+\item "sd"  - standard deviation
+\item "modal" - modal
+\item "sobel" - sobel filter in horizontal and vertical directions
+\item "sobel_hrzt" - horizontal only
+\item "sobel_vert" - vertical only
+}
+}
 }
 \note{
 notes if needed

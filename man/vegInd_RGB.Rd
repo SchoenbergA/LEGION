@@ -10,7 +10,7 @@ vegInd_RGB(rgb, indlist = "all")
 \item{rgb}{a RasterStack or Brick with RGB bands}
 
 \item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
-"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further informations)}
+"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further information)}
 }
 \value{
 Returns a raster stack with the selected Vegetation Indices
@@ -19,7 +19,20 @@ Returns a raster stack with the selected Vegetation Indices
 computes several Vegetation Indices based on RGB bands
 }
 \details{
-further description
+\subsection{available indices}{
+
+"VVI"
+"VARI"
+"NDTI"
+"RI"
+"CI"
+"BI"
+"SI"
+"HI"
+"TGI"
+"GLI"
+"NGRDI"
+}
 }
 \note{
 notes if needed

@@ -7,7 +7,16 @@
 #' @param sizes numeric values for the moving window, must be odd
 #' @param layernames optional - comma seperated character for desired layernames
 #' @return Returns a raster stack with the selected filters
-#' @details further description
+#' @details
+#' ## available filter methods
+#' * "sum" - Sum of all cells in Moving Window
+#' * "min" - minimum value in Moving Window
+#' * "max" - maximum value in Moving Window
+#' * "sd"  - standard deviation
+#' * "modal" - modal
+#' * "sobel" - sobel filter in horizontal and vertical directions
+#' * "sobel_hrzt" - horizontal only
+#' * "sobel_vert" - vertical only
 #' @note notes if needed
 #' @author Andreas Schönberg
 #' @seealso \code{\link{focal}},\code{\link{filter_Rst}}

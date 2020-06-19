@@ -22,24 +22,17 @@ Returns a raster stack with the selected filters
 calculates several filters for a single raster
 }
 \details{
-\subsection{Subsection within details}{
-\subsection{Sub-subsection}{
-
-... text ...Filter arguments:
+\subsection{available filter methods}{
 \itemize{
-\item "sum" - Sum of all cells in MovingWindow
-\item "min" - minimum value
-\item "max" - maximum vlaue
+\item "sum" - Sum of all cells in Moving Window
+\item "min" - minimum value in Moving Window
+\item "max" - maximum value in Moving Window
+\item "sd"  - standard deviation
+\item "modal" - modal
+\item "sobel" - sobel filter in horizontal and vertical directions
+\item "sobel_hrzt" - horizontal only
+\item "sobel_vert" - vertical only
 }
-\enumerate{
-\item sd"  - standart deviation
-\item modal"- modal
-3 . sobel" - sobel filter in horizontal and vertical directions
-| "sobel_hrzt"| - horizontal only
-| "sobel_vert"| - vertical only
-}
-}
-
 }
 }
 \note{

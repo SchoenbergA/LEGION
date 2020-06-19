@@ -2,10 +2,21 @@
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param rgb a RasterStack or Brick with RGB bands
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
-#' "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further informations)
-
+#' "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further information)
 #' @return Returns a raster stack with the selected Vegetation Indices
-#' @details further description
+#' @details
+#' ## available indices
+#' "VVI"
+#' "VARI"
+#' "NDTI"
+#' "RI"
+#' "CI"
+#' "BI"
+#' "SI"
+#' "HI"
+#' "TGI"
+#' "GLI"
+#' "NGRDI"
 #' @note notes if needed
 #' @author Andreas Schönberg
 #' @references

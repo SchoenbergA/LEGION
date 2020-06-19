@@ -8,17 +8,15 @@
 
 #' @return Returns a raster stack with the selected filters
 #' @details
-#' ## Subsection within details
-#' ### Sub-subsection
-#' ... text ...Filter arguments:
-#' * "sum" - Sum of all cells in MovingWindow
-#' * "min" - minimum value
-#' * "max" - maximum vlaue
-#' 1. sd"  - standart deviation
-#' 2. modal"- modal
-#' 3 . sobel" - sobel filter in horizontal and vertical directions
-#' | "sobel_hrzt"| - horizontal only
-#' | "sobel_vert"| - vertical only
+#' ## available filter methods
+#' * "sum" - Sum of all cells in Moving Window
+#' * "min" - minimum value in Moving Window
+#' * "max" - maximum value in Moving Window
+#' * "sd"  - standard deviation
+#' * "modal" - modal
+#' * "sobel" - sobel filter in horizontal and vertical directions
+#' * "sobel_hrzt" - horizontal only
+#' * "sobel_vert" - vertical only
 #' @note notes if needed
 #' @author Andreas Schönberg
 #' @seealso \code{\link{focal}}
