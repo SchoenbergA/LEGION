@@ -11,7 +11,7 @@ vegInd_dev(rgb, indlist = "all")
 \item{rgb}{a RasterStack or Brick with RGB bands}
 
 \item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
-"NDVI", default=all (see details for further information)}
+"NDVI","TDVI","SR","MSR" default=all (see details for further information)}
 }
 \value{
 Returns a raster stack with the selected Vegetation Indices
@@ -27,17 +27,6 @@ computes several Vegetation Indices based on RGB bands
 }
 \note{
 notes if needed
-}
-\examples{
-### load data
-data(exp_rgb)
-### compute all vegetation indizes
-x <-LEGION::vegInd_RGB(exp_rgb)
-plot(x)
-### select specific vegetation indices
-vi <-c("VVI","SI","GLI")
-y <-LEGION::vegInd(exp_rgb,indlist=vi)
-plot(y)
 }
 \references{
 The IDB Project (2020): Index Database (https://www.indexdatabase.de/)

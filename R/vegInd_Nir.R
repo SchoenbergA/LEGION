@@ -2,7 +2,7 @@
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param rgb a RasterStack or Brick with RGB bands
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
-#' "NDVI", default=all (see details for further information)
+#' "NDVI","TDVI","SR","MSR" default=all (see details for further information)
 #' @return Returns a raster stack with the selected Vegetation Indices
 #' @details
 #' ## available indices
@@ -13,15 +13,7 @@
 #' @references
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
 #' @examples
-#' ### load data
-#' data(exp_rgb)
-#' ### compute all vegetation indizes
-#' x <-LEGION::vegInd_RGB(exp_rgb)
-#' plot(x)
-#' ### select specific vegetation indices
-#' vi <-c("VVI","SI","GLI")
-#' y <-LEGION::vegInd(exp_rgb,indlist=vi)
-#' plot(y)
+
 #' @export vegInd_RGB
 #' @aliases vegInd_RGB
 
@@ -29,12 +21,12 @@ vegInd_dev<- function(rgb,indlist="all"){
 
   ### check input
   if(any(indlist=="all")){
-    indlist <-c("NDVI","VARI","VVI")
+    indlist <-c("NDVI","TDVI","SR","MSR")
   }else{indlist=indlist}
 
   #create notin and check for wrong input
   `%notin%` <- Negate(`%in%`)
-  if(any(indlist %notin% c("NDVI","VARI","VVI"))) {
+  if(any(indlist %notin% c("NDVI","TDVI","SR","MSR"))) {
     stop("wrong Vegetation Index selected or not supported")
   }
 
@@ -56,22 +48,29 @@ vegInd_dev<- function(rgb,indlist="all"){
       names(NDVI) <- "NDVI"
       return(NDVI)
 
-    } else if (item=="VARI"){
+    } else if (item=="TDVI"){
       cat(" ",sep = "\n")
-      cat("### LEGION calculating (Visible Atmospherically Resistant Index (VARI)) ###",sep = "\n")
-      VARI<-(green-red)/(green+red-blue)
-      names(VARI) <- "VARI"
-      return(VARI)
+      cat("### LEGION calculating (Transformed Difference Vegetation Index (TDVI)) ###",sep = "\n")
+      TDVI<-sqrt(0.5+(nir-red/nir+red))
+      names(TDVI) <- "TDVI"
+      return(TDVI)
 
-    }else if (item=="VVI"){
+    } else if (item=="SR"){
       cat(" ",sep = "\n")
-      cat("### LEGION calculating (Visible Vegetation Index (VVI)) ###",sep = "\n")
-      VVI <- (1 - abs((red - 30) / (red + 30))) *
-        (1 - abs((green - 50) / (green + 50))) *
-        (1 - abs((blue - 1) / (blue + 1)))
-      names(VVI) <- "VVI"
-      return(VVI)
+      cat("### LEGION calculating (Simple Ratio (SR)) ###",sep = "\n")
+      SR<-nir/red
+      names(SR) <- "SR"
+      return(SR)
+
+    } else if (item=="MSR"){
+      cat(" ",sep = "\n")
+      cat("### LEGION calculating (Modified Simple Ratio (MSR)) ###",sep = "\n")
+      MSR<-red/((nir/red+1)**0.5)
+      names(MSR) <- "MSR"
+      return(MSR)
+
     }
+
   })# end main loop
 
   cat(" ",sep = "\n")
@@ -81,4 +80,3 @@ vegInd_dev<- function(rgb,indlist="all"){
   #output
   return(raster::stack(indices))
 } # end function
-
