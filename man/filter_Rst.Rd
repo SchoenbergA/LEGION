@@ -40,7 +40,7 @@ notes if needed
 }
 \examples{
 ### load data
-data(exp_rst)
+exp_rst <-LEGION::exp_rst
 ### compute all filter
 x <- filter_Rst(exp_rst,sizes=c(3,5,7))
 plot(x[[]])

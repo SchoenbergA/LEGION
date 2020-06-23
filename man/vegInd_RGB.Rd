@@ -39,7 +39,7 @@ notes if needed
 }
 \examples{
 ### load data
-data(exp_rgb)
+exp_rgb <-LEGION::exp_rgb
 ### compute all vegetation indizes
 x <-LEGION::vegInd_RGB(exp_rgb)
 plot(x)

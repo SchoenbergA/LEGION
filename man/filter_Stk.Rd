@@ -42,7 +42,7 @@ notes if needed
 }
 \examples{
 ### load data
-data(exp_rgb)
+exp_rgb <-LEGION::exp_rgb
 ### compute all filter
 x <- filter_Stk(exp_rgb,sizes=3)
 x
