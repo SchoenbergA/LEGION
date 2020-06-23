@@ -23,7 +23,7 @@
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
 #' @examples
 #' ### load data
-#' data(exp_rgb)
+#' exp_rgb <-LEGION::exp_rgb
 #' ### compute all vegetation indizes
 #' x <-LEGION::vegInd_RGB(exp_rgb)
 #' plot(x)
