@@ -3,3 +3,4 @@
 export(filter_Rst)
 export(filter_Stk)
 export(vegInd_RGB)
+export(vegInd_mspec)

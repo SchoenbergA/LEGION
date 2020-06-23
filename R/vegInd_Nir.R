@@ -1,6 +1,6 @@
 #' calculate RGB+Nir vegetation indices
 #' @description computes several Vegetation Indices based on RGB bands
-#' @param rgb a RasterStack or Brick with RGB bands
+#' @param mspec a RasterStack or Brick with multispectral RGB+Nir bands
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
 #' "NDVI","TDVI","SR","MSR" default=all (see details for further information)
 #' @return Returns a raster stack with the selected Vegetation Indices
@@ -13,11 +13,19 @@
 #' @references
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
 #' @examples
+#' ### load data
+#' exp_mspec <-LEGION::exp_mspec
+#' ### compute all vegetation indizes
+#' x <-LEGION::vegInd_mspec(exp_mspec)
+#' plot(x)
+#' ### select specific vegetation indices
+#' vi <-c("NDVI","TDVI")
+#' y <-LEGION::vegInd(exp_rgb,indlist=vi)
+#' plot(y)
+#' @export vegInd_mspec
+#' @aliases vegInd_mspec
 
-#' @export vegInd_RGB
-#' @aliases vegInd_RGB
-
-vegInd_dev<- function(rgb,indlist="all"){
+vegInd_mspec <- function(mspec,indlist="all"){
 
   ### check input
   if(any(indlist=="all")){
@@ -32,12 +40,12 @@ vegInd_dev<- function(rgb,indlist="all"){
 
 
   #check if raster is an 3 band layer
-  if (raster::nlayers(rgb) < 4)
+  if (raster::nlayers(mspec) < 4)
     stop("Input raster has less than 4 bands")
-  red <- rgb[[1]]
-  green <- rgb[[2]]
-  blue <- rgb[[3]]
-  nir <- rgb[[4]]
+  red <- mspec[[1]]
+  green <- mspec[[2]]
+  blue <- mspec[[3]]
+  nir <- mspec[[4]]
 
   #calculate selected indizes
   indices <- lapply(indlist, function(item){
