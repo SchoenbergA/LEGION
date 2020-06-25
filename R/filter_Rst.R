@@ -22,7 +22,8 @@
 #' @seealso \code{\link{focal}}
 #' @examples
 #' ### load data
-#' exp_rst <-LEGION::exp_rst
+#' rst_path <-system.file("extdata","exp_rst.tif",package = "LEGION")
+#' exp_rst <- raster::raster(rst_path)
 #' ### compute all filter
 #' x <- filter_Rst(exp_rst,sizes=c(3,5,7))
 #' plot(x[[]])

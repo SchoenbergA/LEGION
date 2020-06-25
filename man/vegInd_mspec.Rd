@@ -29,13 +29,14 @@ notes if needed
 }
 \examples{
 ### load data
-exp_mspec <-LEGION::exp_mspec
+mspec_path <-system.file("extdata","exp_mspec.tif",package = "LEGION")
+exp_mspec <- raster::stack(mspec_path)
 ### compute all vegetation indizes
 x <-LEGION::vegInd_mspec(exp_mspec)
 plot(x)
 ### select specific vegetation indices
 vi <-c("NDVI","TDVI")
-y <-LEGION::vegInd(exp_rgb,indlist=vi)
+y <-LEGION::vegInd_mspec(exp_mspec,indlist=vi)
 plot(y)
 }
 \references{

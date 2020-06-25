@@ -39,7 +39,8 @@ notes if needed
 }
 \examples{
 ### load data
-exp_rgb <-LEGION::exp_rgb
+rgb_path <-system.file("extdata","exp_rgb.tif",package = "LEGION")
+exp_rgb <- raster::stack(rgb_path)
 ### compute all vegetation indizes
 x <-LEGION::vegInd_RGB(exp_rgb)
 plot(x)
