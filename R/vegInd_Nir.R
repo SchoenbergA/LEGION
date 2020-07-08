@@ -67,7 +67,7 @@ vegInd_mspec <- function(mspec,indlist="all"){
     } else if (item=="SR"){
       cat(" ",sep = "\n")
       cat("### LEGION calculating (Simple Ratio (SR)) ###",sep = "\n")
-      SR<-nir/red
+      SR<-red/nir
       names(SR) <- "SR"
       return(SR)
 
