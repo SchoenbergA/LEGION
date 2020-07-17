@@ -5,6 +5,7 @@
 #' "sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel"
 #' default = all (see details for further informations)
 #' @param sizes numeric values for the moving window, must be odd
+#' @param NArm remove NA values, default= TRUE
 
 #' @return Returns a raster stack with the selected filters
 #' @details
@@ -32,7 +33,7 @@
 #' @export filter_Rst
 #' @aliases filter_Rst
 
-filter_Rst <- function(rst,fLS="all",sizes){
+filter_Rst <- function(rst,fLS="all",sizes,NArm=TRUE){
 
   ### set default
   if(any(fLS=="all")){
@@ -58,7 +59,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating sum filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting sum  ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        sumLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=sum)
+        sumLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=sum,na.rm=NArm)
         names(sumLS) <- paste0(names(rst),"_sum" ,as.factor(f))
         stack(sumLS)
         return(sumLS)
@@ -71,7 +72,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating minimum filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting min  ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        minLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=min)
+        minLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=min,na.rm=NArm)
         names(minLS) <- paste0(names(rst),"_min" ,as.factor(f))
         return(minLS)
       })
@@ -83,7 +84,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating maximum filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting max  ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        maxLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=max)
+        maxLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=max,na.rm=NArm)
         names(maxLS) <- paste0(names(rst),"_max" ,as.factor(f))
         return(maxLS)
       })
@@ -95,7 +96,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating standart deviation filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting sd   ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        sdLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=sd)
+        sdLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=sd,na.rm=NArm)
         names(sdLS) <- paste0(names(rst),"_sd" ,as.factor(f))
         return(sdLS)
       })
@@ -107,7 +108,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating mean filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting mean  ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        meanLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=mean)
+        meanLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=mean,na.rm=NArm)
         names(meanLS) <- paste0(names(rst),"_mean" ,as.factor(f))
         return(meanLS)
       })
@@ -119,7 +120,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
       cat("### LEGION calculating modal filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting modal  ",as.factor(f),"*",as.factor(f),sep = "\n"))
-        modalLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=modal)
+        modalLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=modal,na.rm=NArm)
         names(modalLS) <- paste0(names(rst),"_modal" ,as.factor(f))
         return(modalLS)
       })
@@ -144,8 +145,8 @@ filter_Rst <- function(rst,fLS="all",sizes){
       mx[is.na(mx)] = 0
       my[is.na(my)] = 0
 
-      sobelLS <- sqrt(raster::focal(rst,mx,fun=sum)**2+
-                      raster::focal(rst,my,fun=sum)**2 )
+      sobelLS <- sqrt(raster::focal(rst,mx,fun=sum,na.rm=NArm)**2+
+                      raster::focal(rst,my,fun=sum,na.rm=NArm)**2 )
       names(sobelLS) <- paste0(names(rst),"_sobel" ,as.factor(f))
       return(sobelLS)
       })
@@ -170,7 +171,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
         mx[is.na(mx)] = 0
         my[is.na(my)] = 0
 
-        sobel_hLS <- raster::focal(rst, mx, fun = sum)
+        sobel_hLS <- raster::focal(rst, mx, fun = sum,na.rm=NArm)
         names(sobel_hLS) <- paste0(names(rst),"_sobel_h" ,as.factor(f))
         return(sobel_hLS)
       })
@@ -195,7 +196,7 @@ filter_Rst <- function(rst,fLS="all",sizes){
         mx[is.na(mx)] = 0
         my[is.na(my)] = 0
 
-        sobel_vLS <- raster::focal(rst, mx, fun = sum)
+        sobel_vLS <- raster::focal(rst, mx, fun = sum,na.rm=NArm)
         names(sobel_vLS) <- paste0(names(rst),"_sobel_v" ,as.factor(f))
         return(sobel_vLS)
       })

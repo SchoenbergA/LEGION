@@ -4,7 +4,7 @@
 \alias{filter_Rst}
 \title{filter single band raster}
 \usage{
-filter_Rst(rst, fLS = "all", sizes)
+filter_Rst(rst, fLS = "all", sizes, NArm = TRUE)
 }
 \arguments{
 \item{rst}{a single band raster layer}
@@ -14,6 +14,8 @@ filter_Rst(rst, fLS = "all", sizes)
 default = all (see details for further informations)}
 
 \item{sizes}{numeric values for the moving window, must be odd}
+
+\item{NArm}{remove NA values, default= TRUE}
 }
 \value{
 Returns a raster stack with the selected filters
