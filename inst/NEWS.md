@@ -1,3 +1,7 @@
+## LEGION 0.0.1.2
+* new features
+detct_RstCor - now plots the cormatrix (but requires corrplot) and has bolean switch to either return the cleand Stack or the corMatrix.
+
 ## LEGION 0.0.1.1
 * bugfixes
 added NA removing for filters

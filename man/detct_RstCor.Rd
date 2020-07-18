@@ -4,12 +4,14 @@
 \alias{detct_RstCor}
 \title{detect Raster Correlation}
 \usage{
-detct_RstCor(Stk, THvalue)
+detct_RstCor(Stk, THvalue, returnCorTab = FALSE)
 }
 \arguments{
 \item{Stk}{a RasterStack}
 
 \item{THvalue}{numeric in 0.X - Treshold Value for Correlation Value to drop Layers.}
+
+\item{returnCorTab}{boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE}
 }
 \value{
 Returns a raster stack with the layers correlation less than the Treshold Value.
@@ -35,6 +37,8 @@ x <-LEGION::vegInd_RGB(exp_rgb)
 # perform Cor Test
 y <- detct_RstCor(x,0.7)
 names(y)
+# to return the Correlation Matrix
+z <- detct_RstCor(x,0.7,returnCorTab=TRUE)
 }
 \author{
 Andreas Schönberg

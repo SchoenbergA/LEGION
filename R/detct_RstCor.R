@@ -2,6 +2,7 @@
 #' @description detects Correlation of Rasterlayers in a RasterStack and returns a Rasterstack without the correlating Layers
 #' @param Stk a RasterStack
 #' @param THvalue numeric in 0.X - Treshold Value for Correlation Value to drop Layers.
+#' @param returnCorTab boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE
 
 
 #' @return Returns a raster stack with the layers correlation less than the Treshold Value.
@@ -20,10 +21,12 @@
 #' # perform Cor Test
 #' y <- detct_RstCor(x,0.7)
 #' names(y)
+#' # to return the Correlation Matrix
+#' z <- detct_RstCor(x,0.7,returnCorTab=TRUE)
 #' @export detct_RstCor
 #' @aliases detct_RstCor
 
-detct_RstCor <- function(Stk,THvalue){
+detct_RstCor <- function(Stk,THvalue,returnCorTab=FALSE){
   cat("### LEGION testing Raster Correlation",sep="\n")
   #get values from Stack
   val <- getValues(Stk)
@@ -45,6 +48,7 @@ detct_RstCor <- function(Stk,THvalue){
 
   #cortest and select correlating layers
   cortab <- cor(val)
+  corrplot::corrplot(cortab)
   lyrnames <-caret::findCorrelation(cortab,abs(THvalue),names=T)
   cat(" ",sep = "\n")
   cat(" ",sep = "\n")
@@ -55,7 +59,11 @@ detct_RstCor <- function(Stk,THvalue){
   cat(paste(lyrnames,collapse=", "),sep="\n")
   cat(" ",sep = "\n")
   cat("### LEGION finished Raster Correlation",sep="\n")
-  #output
-  Stk_clean <- dropLayer(Stk,lyrnames)
-  return(Stk_clean)
+            #output
+            if(returnCorTab==FALSE){
+            Stk_clean <- dropLayer(Stk,lyrnames)
+            return(Stk_clean)}
+            if(returnCorTab==TRUE){
+            return(cortab)
+  }
 }# end of function
