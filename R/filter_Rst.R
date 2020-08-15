@@ -13,6 +13,7 @@
 #' * "sum" - Sum of all cells in Moving Window
 #' * "min" - minimum value in Moving Window
 #' * "max" - maximum value in Moving Window
+#' * "mean"- mean of all cells in Moving Window
 #' * "sd"  - standard deviation
 #' * "modal" - modal
 #' * "sobel" - sobel filter in horizontal and vertical directions
@@ -23,13 +24,17 @@
 #' @seealso \code{\link{focal}}
 #' @examples
 #' ### load data
-#' exp_rst <-LEGION::exp_rst
+#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+#' mspec <- raster::stack(extpath)
+#' names(mspec)<- c("blue","green","red","nir")
+#' ### seperate single raster layer
+#' rst <- mspec$nir
 #' ### compute all filter
-#' x <- filter_Rst(exp_rst,sizes=c(3,5,7))
-#' plot(x[[]])
+#' x <- filter_Rst(rst,sizes=c(3,5,7))
+#' plot(x[[3]])
 #' ### compute specific filters
 #' flist <- c("modal","sobel_vert","mean")
-#' y <- filter_Rst(exp_rst,fLS=flist,sizes=c(3,5,7))
+#' y <- filter_Rst(rst,fLS=flist,sizes=c(3,5,7))
 #' @export filter_Rst
 #' @aliases filter_Rst
 
@@ -37,12 +42,12 @@ filter_Rst <- function(rst,fLS="all",sizes,NArm=TRUE){
 
   ### set default
   if(any(fLS=="all")){
-    fLS <-c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel")
+    fLS <-c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert")
   }else{fLS==fLS}
 
   #create notin and check for wrong input
   `%notin%` <- Negate(`%in%`)
-  if(any(fLS %notin% c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel"))) {
+  if(any(fLS %notin% c("sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert"))) {
     stop("wrong Filter selected or not supported")
   }
 

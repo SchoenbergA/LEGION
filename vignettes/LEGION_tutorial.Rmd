@@ -1,0 +1,236 @@
+---
+title: "LEGION_tutorial"
+author: "Andreas SChönberg"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+
+vignette: >
+  %\VignetteIndexEntry{LEGION_tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+### Introduction
+
+## Background and Motivation
+
+For several spatial environmental tasks like maschine learing based classifications or ordination and cluster analysis atrifically layers (further called 'ALs' ) are needed as predictors. Those predictors should deliver as much as possible informations without overfitting. The decisions of what artifically layers should be used can lead frustration and 'overthinking'. In science we can NOT just say we take "this index and this filter". We should (or maybe better say it would be desirealbe :-) ) to comprehensible justify our desicions. Best (i would say) with automated statisical approaches.
+
+So we could just go the "brute force" way. LEGION delivers up 15 diffenrent Indices (if Nir is availibe) and 9 different filters. If we now lets say compute all Indices and use all filters with moving windows of (just) 3,5,7,9 we end up with: 15 * 9 * 4 = 540 ALs. 
+
+One major problem with ALs is the risk of overfitting a model by high amounts of highly correlating layers. Furthermore a maschine learing/ordination and cluster analysis with a stack containing higly correlating ALs could take unnesserarily much more time to proceed. So instead of thinking about which AL could be useful let the machine do the job :)
+
+Therefore I created LEGION a tool for automated computation of spectral indices and filters.
+
+## Install and get help
+
+First install the package and load it into the environment.
+NOTE: devtools package is neccesary to install LEGION via Github.
+```{r setup, message = FALSE, warning=FALSE}
+#devtools::install_github("SchoenbergA/LEGION@master")
+require(LEGION)
+require(raster)
+```
+
+For help about the functions provided by LEGION see the help:
+
+```{r, message = FALSE, warning=FALSE}
+help(package="LEGION")
+```
+
+### Tutorial
+
+In this tutorial I will lead you throught the process of computing a RasterStack with several ALs with LEGION. Hereby we will start with just one Input RasterLayer and 'form up a LEGION of ALs': the output RasterStack. Furthermore we will make sure that the final output RasterStack is cleand from highly correlating layers.
+
+## Getting started
+
+# First of all the Input data
+
+LEGION is created to do 'from one to many' means it generates many ALs from just one input data. So it is important to know about the data source. Usually for the further tasks (maschine learning /ordination and cluster analysis) it is some sort of arial image. LEGION is made to support either low bugdet approches with drone based RGB images over high resolution airborne Orthophotos up to Multispectral Sattelite Images (like Sentinal 2a). Essential are the bands. The workflow of LEGION is primalily based on RGB (for low bugdet drone based approaches) and additionally supports more Indices with Near-Infrared (Nir)(because Infrared Sensor are far more commen for drones than high cost multi or even hyper spectral sensors). For multispectral satelite data the RGB+Nir bands can be used but (untill now) LEGION doest NOT support indices which use any other bands than RGB+Nir.
+
+# Example data
+
+The attached example dataset is a Raster Stack with the spectral bands red, green and blue from an high resolution (15m) Orthophoto. Further i assigned the Nir band from an IRC (Infrared Composit) with the same resolution. Note that the Nir band comes from another source because the red and grenn band from the IRC differs from thise coming from the RGB. Further not that the bands are sorted in 1=blue, 2=grenn, 3=red, nir=4. This is used to avoid users to think about "an RGB image has 1=r,2=g,3=b". In fact especially with unknown datasets RGB could be mean bands 3,2,1 or 1,2,3.
+
+The images shows a Treeline in the 'Lautaret vally' in the france alps
+
+Lets see.
+
+```{r fig.height = 5, fig.width = 5, fig.align = "center"}
+extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+mspec <- raster::stack(extpath)
+# set names
+names(mspec)<- c("blue","green","red","nir")
+plotRGB(mspec,3,2,1)
+```
+The RGB (3,2,1) show the True Color Composit. Some trees with grass and bare soil.
+
+```{r fig.height = 5, fig.width = 5, fig.align = "center"}
+plotRGB(mspec,4,3,2)
+```
+
+The IRC (4,3,2) to show that the Nir band works :-)
+
+## Compute Indices
+
+LEGION delivers functions to compute ALs in two different ways: indices and filters.
+It looks clearly to first compute Indices and THAN compute filters (because it make nearly no sense to compute indices with filtered bands).
+
+Depended on the data containing 'Nir' bands we can compute 'RGB based Indices' or additionally 'RGB+Nir based indices'. NOTE that if we have 'Nir' bands we can (and should) compute 'RGB+Nir based indices' AND 'RGB based Indices' to generated more ALs.
+
+The functions are (surprise) 'vegInd_RGB' and 'vegInd_mspec'.
+In this Tutorial we will use the default setting 'indlist="all"' to generate all supported indices.
+```{r }
+# compute RGB and RGB+Nir(multispectral) indices
+rgbIND <- LEGION::vegInd_RGB(mspec,3,2,1,indlist="all")
+rgbNIR <- LEGION::vegInd_mspec(mspec,3,2,1,4,indlist="all")
+
+```
+
+Lets have a look at the data.
+
+```{r fig.height = 5, fig.width = 5, fig.align = "center"}
+par(mfrow=c(2,2))
+plot(rgbIND$VVI)
+plot(rgbIND$VARI)
+plot(rgbIND$BI)
+plot(rgbIND$SI)
+
+```
+
+```{r fig.height = 5, fig.width = 5, fig.align = "center"}
+par(mfrow=c(2,2))
+plot(rgbNIR$NDVI)
+plot(rgbNIR$TDVI)
+plot(rgbNIR$SR)
+plot(rgbNIR$MSR)
+
+```
+As (hopefully expected :)) the indices in some way looks quietly the same.
+
+Now lets put both Stack together
+```{r }
+# merge both Stacks in one Stack
+IndStk <- raster::stack(rgbIND,rgbNIR)
+names(IndStk) # check names
+nlayers(IndStk) # check amount of Layers
+```
+
+Now lets see our results. Instead of the input data with 4 layers (the bands) we have additionally 15 ALs to 'feed' a machine learning alorithem (or other approaches). So now we can go further with filters?
+Yes sure we could but remember that the indices looks quietly the same? If we now compute filters (dependet on your maschine) it could take a lot of time to compute all thise filters for ALL those indices. Propably up to most of this time could flow in filtering higly correlating layers to just produce several (maybe hundreds) of additionally ALs which doesnt deliver additionally informations.
+
+So first thing now is to chek for correlations.
+
+### Correaltion Check
+
+The 'detect_RstCor' function of LEGION will (who had it excpected) detect correlations within an input Stack and return a Stack only containing the not highly correlating layers dependedt on given tresholds.
+The parameter "returnCorTab" set on TRUE will return the correlation table instead of the Stack. For the threshold value "THvalue" there is no absolute border. I recommend to first test some setting before going on with the Stack. But the lower the Value the more layers which do not highly correalate are dropped. A good Idea is to start around 0.9! The THvalue is set in Cor value which means 1.0 is absolute correalation (same with -1.0).
+
+Lets detect those correaltions.
+```{r }
+# check for correlations
+justcheck <- LEGION::detct_RstCor(rgbIND,0.9)
+```
+AS we see with THvalue of 0.9 (every layers with cor > 0.9 and < -0.9 are dropped) the NDTI, CI and NGRDI are dropped.
+```{r }
+# check for correlations
+justcheck2 <- LEGION::detct_RstCor(rgbNIR,0.8)
+```
+For the RGB+Nir indices the NDVI and MSR are dropped (with 0.9).
+NOTE if for any reason you want the NDVI (a higly common used Vegetation Index) to keep in your final Stack you could either compute it again (only the NDVI) and add it to the final Stack or just select another combination of indices in "vegInd_mspec" (e.G. to keep NDVI try to avoid the correlating indices like SR and TDVI but this goes to far here)
+
+Now lets go for the merged Stack.
+
+```{r }
+# check for correlations
+justcheck3 <- LEGION::detct_RstCor(IndStk,0.8)
+```
+
+For the "Main Stack" of 15 ALs the Correlation detection drops even half of the Stack:NDTI, CI, NGRDI, VARI, NDVI, TDVI, MSR, BI. Note that those are NOT exactly the same than for each ind type Stack alone.
+I suggest this is cause by correlations BETWEEN RGB and RGB+Nir layers.
+
+Remember the THvalue of 0.9 used here is just to demonstrate the funcionlity of detect_RstCor. Feel free to play with different values. For this tutorial we will keep the Stack with remaining: "VVI" "RI"  "SI"  "HI"  "TGI" "GLI" "SR" Indices (7 ALs).
+
+Further Note that to test for correlations NA values are deleted BUT ONLY for the cor test NOT in the returend Stack. So if you go on with the Stack and your approach (eG Random Forest Maschine Learing) cannot handle NA values you need to na.omit by hand. To keep NAs after "detect_RstCor" is implemeted to NOT modifie the layers  and keep them as they are computed.
+
+```{r }
+# rename final Indices Stack
+IndStk_clean <- justcheck3
+```
+
+So now with our 7 ALs containing Indice Stack (cleaned from higly correlating layers) we can go on for computing filters.
+
+### Filter Usage
+
+LEGION delivers (atm) 9 differet filters: Sum, Min, Max, Mean, Sd, Modal and Sobal (combined and single horizontal/vertical). Each filter uses a moving window and requires odd values (eg 3x3). The only limitation for the filter sizes is the relation to the x and y lenght of the input data. So for a 100x100 pixel image it makes no sense to filter with a 51x51 moving window (I would even say more than 15 would be waste of time). Here we encounter a major Problem in the "let the maschine do the job" idea, cause there is no "rule" to define the "best" filter or Moving window. But with the dropping of highly correlating ALs we just saved a lot of time. 
+
+To summarise we have 9 filters and lets say use Moving windows like: 3,5,7,9. That would mean a single Raster will produce 9X4 = 36 ALs. For our IndSt with 7 layers this means: 7x36 = 252 ALs.
+BUT it is more than half (time saved) than the full Indice Stack with 15 = 540 ALs.
+
+But again lets first look for correlations :-)
+(to save some time lets start with all filters, moving window =3*3 and ONLY the AL=VVI index)
+
+```{r }
+# compute 3*3 filters and check for correlations
+f3 <-LEGION::filter_Rst(IndStk_clean$VVI,sizes=3)
+justcheckFILTER <- LEGION::detct_RstCor(f3,0.9)
+
+names(justcheckFILTER)
+
+```
+We see again about less than half of the ALs correlate (4/9) even with THvalue of 0.9. For our final Stack this would mean to reduce it from 224 ALs to 140 ALs.
+
+Unlike with the indices we now select the remaining filter types by hand to compute tham for the hole Indice Stack. But NOTE: like with the indices if you want to keep a layer which has been detected to correlate feel free to keep it (because reasons)
+
+Ok but one last thing: What about automated selecting the Moving Windows ("sizes"). Ok what would you expect for sum filters?
+```{r }
+# compute selected Filters
+sumMW <-LEGION::filter_Rst(IndStk_clean$VVI,fLS = "sum", sizes=c(3,5,7,9,11,13,15))
+justcheckFILTER <- LEGION::detct_RstCor(sumMW,0.8)
+
+
+```
+We see the sum filters all correlate and so only (in this case) the 15*15 is keept. But for our target this makes no sense. But what with the other Filter types?
+
+```{r }
+# compute selected Filters
+sdMW <-LEGION::filter_Rst(IndStk_clean$VVI,fLS = "sd", sizes=c(3,5,7,9,11,13,15))
+justcheckFILTER <- LEGION::detct_RstCor(sdMW,0.9)
+
+
+```
+Ok here the correlations differs a little an (in the case of THvalue=0.9) the 3*3 and 15*15 are keept.
+But even if we see here some potential to save computing time again it makes not so much sense (in my opinion) to only use the 3 and 15 Moving windows on "sd" filters and the 15 for sum.
+
+At this point i will not test every filter type.
+The conclusion so far is just: There is currently no really Idea to select the sizes for Moving windows
+(feel free to test this and contribute on LEGION)
+
+So now we can compute our "final ALs Stack"
+We will use min, max, modal, sobel and sobel_hrzt (horizontal only) (as selected by our detect cor test earlier). To save time i will just use the sizes 3,5 for moving Windows, feel free to end up this tutorial by using a longer seqence.
+
+```{r }
+# compute selected Filters
+finalStk <-LEGION::filter_Stk(IndStk_clean,fLS = c("min","max","modal","sobel","sobel_hrzt"), sizes=c(3,5))
+justcheckFINAL <- LEGION::detct_RstCor(finalStk,0.8)
+
+
+```
+Here we go: From just the 4 bands of the original Stack we now have 70 ALs with (for the indices proved) less correlating layer. So this should feed our Maschine Learing (or other)very well.
+
+If we use finally the detect cor on our final Stack exacly half of the layers are dropped. If we look on the Cor plot we can se some relationsships that within an Index some of the filters correlate.
+
+But finally our goal was to check for correlation between the availbe indices and filter types. So to keep those ALs or to drop them is NOT content of this Tutorial or LEGION
+
+### Conclusion
+
+With the LEGION way to ' from up a LEGION ' we receive a Raster Stack with several different ALs to feed a maschine learing algorithem (or other approaches). The only desicions we made was the THvalue for the correlations and the filter sizes. So finally the LEGION way helps to avoid 'overthinking' about decisions and delivers a workflow to generate  a Predictor Stack from just one input dataset in a automated comprehensible and justified statisical way.
+
+Best regards
+A. Schönberg

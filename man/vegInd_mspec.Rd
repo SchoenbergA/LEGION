@@ -4,10 +4,25 @@
 \alias{vegInd_mspec}
 \title{calculate RGB+Nir vegetation indices}
 \usage{
-vegInd_mspec(mspec, indlist = "all")
+vegInd_mspec(
+  mspec,
+  red = NULL,
+  green = NULL,
+  blue = NULL,
+  nir = NULL,
+  indlist = "all"
+)
 }
 \arguments{
 \item{mspec}{a RasterStack or Brick with multispectral RGB+Nir bands}
+
+\item{red}{the band/layer number of band'red'}
+
+\item{green}{the band/layer number of band'green'}
+
+\item{blue}{the band/layer number of band'blue'}
+
+\item{nir}{the band/layer number of band'Near Infrared (nir)'}
 
 \item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
 "NDVI","TDVI","SR","MSR" default=all (see details for further information)}
@@ -29,13 +44,15 @@ notes if needed
 }
 \examples{
 ### load data
-exp_mspec <-LEGION::exp_mspec
+extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+mspec <- raster::stack(extpath)
+names(mspec)<- c("blue","green","red","nir")
 ### compute all vegetation indizes
-x <-LEGION::vegInd_mspec(exp_mspec)
+x <-LEGION::vegInd_mspec(mspec,3,2,1,4)
 plot(x)
 ### select specific vegetation indices
 vi <-c("NDVI","TDVI")
-y <-LEGION::vegInd(exp_rgb,indlist=vi)
+y <-LEGION::vegInd_mspec(mspec,3,2,1,4,indlist=vi)
 plot(y)
 }
 \references{

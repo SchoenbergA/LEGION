@@ -1,6 +1,10 @@
 #' calculate RGB+Nir vegetation indices
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param mspec a RasterStack or Brick with multispectral RGB+Nir bands
+#' @param red the band/layer number of band'red'
+#' @param green the band/layer number of band'green'
+#' @param blue the band/layer number of band'blue'
+#' @param nir the band/layer number of band'Near Infrared (nir)'
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
 #' "NDVI","TDVI","SR","MSR" default=all (see details for further information)
 #' @return Returns a raster stack with the selected Vegetation Indices
@@ -14,18 +18,20 @@
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
 #' @examples
 #' ### load data
-#' exp_mspec <-LEGION::exp_mspec
+#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+#' mspec <- raster::stack(extpath)
+#' names(mspec)<- c("blue","green","red","nir")
 #' ### compute all vegetation indizes
-#' x <-LEGION::vegInd_mspec(exp_mspec)
+#' x <-LEGION::vegInd_mspec(mspec,3,2,1,4)
 #' plot(x)
 #' ### select specific vegetation indices
 #' vi <-c("NDVI","TDVI")
-#' y <-LEGION::vegInd(exp_rgb,indlist=vi)
+#' y <-LEGION::vegInd_mspec(mspec,3,2,1,4,indlist=vi)
 #' plot(y)
 #' @export vegInd_mspec
 #' @aliases vegInd_mspec
 
-vegInd_mspec <- function(mspec,indlist="all"){
+vegInd_mspec <- function(mspec,red=NULL,green=NULL,blue=NULL,nir=NULL,indlist="all"){
 
   ### check input
   if(any(indlist=="all")){
@@ -40,12 +46,13 @@ vegInd_mspec <- function(mspec,indlist="all"){
 
 
   #check if raster is an 3 band layer
-  if (raster::nlayers(mspec) < 4)
-    stop("Input raster has less than 4 bands")
-  red <- mspec[[1]]
-  green <- mspec[[2]]
-  blue <- mspec[[3]]
-  nir <- mspec[[4]]
+  if (any(is.null(red),is.null(green),is.null(blue),is.null(nir))==TRUE){
+    stop("no bands or less bands defined")
+  }
+  red <- mspec[[red]]
+  green <- mspec[[green]]
+  blue <- mspec[[blue]]
+  nir <- mspec[[nir]]
 
   #calculate selected indizes
   indices <- lapply(indlist, function(item){

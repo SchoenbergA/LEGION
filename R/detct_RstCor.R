@@ -15,9 +15,11 @@
 #' @author Andreas Schönberg
 #' @examples
 #' ### load data to compute RGB Indices
-#' exp_rgb <-LEGION::exp_rgb
+#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+#' mspec <- raster::stack(extpath)
+#' names(mspec)<- c("blue","green","red","nir")
 #' ### compute all vegetation indizes
-#' x <-LEGION::vegInd_RGB(exp_rgb)
+#' x <-LEGION::vegInd_RGB(exp_rgb,3,2,1)
 #' # perform Cor Test
 #' y <- detct_RstCor(x,0.7)
 #' names(y)
