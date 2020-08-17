@@ -12,6 +12,7 @@
 #' * "sum" - Sum of all cells in Moving Window
 #' * "min" - minimum value in Moving Window
 #' * "max" - maximum value in Moving Window
+#' * "mean"- mean of all cells in Moving Window
 #' * "sd"  - standard deviation
 #' * "modal" - modal
 #' * "sobel" - sobel filter in horizontal and vertical directions
@@ -22,19 +23,19 @@
 #' @seealso \code{\link{focal}},\code{\link{filter_Rst}}
 #' @examples
 #' ### load data
-#' rgb_path <-system.file("extdata","exp_rgb.tif",package = "LEGION")
-#' exp_rgb <- raster::stack(rgb_path)
-#' ### compute all filter
-#' x <- filter_Stk(exp_rgb,sizes=3)
-#' x
+#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+#' mspec <- raster::stack(extpath)
+#' ### compute all filters or every layer in stack
+#' x <- filter_Stk(mspec,sizes=3)
+#' x # note that the names are basic set x.1
+#' ### define layernames
+#' ln <- c("blue","green","red","nir")
+#' z <- filter_Stk(mspec,fLS="sum",sizes=3,layernames=ln)
+#' names(z)
 #' ### compute specific filters
 #' flist <- c("modal","sobel_vert","mean")
-#' y <- filter_Stk(exp_rst,fLS=flist,sizes=c(3,5,7))
+#' y <- filter_Stk(mspec,fLS=flist,sizes=c(3,5,7))
 #' y
-#' ### define layernames
-#' ln <-c("red","green","blue")
-#' z <- filter_Stk(exp_rgb,fLS="sum",sizes=3,layernames=ln)
-#' names(z)
 #' @export filter_Stk
 #' @aliases filter_Stk
 

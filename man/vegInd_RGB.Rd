@@ -4,10 +4,16 @@
 \alias{vegInd_RGB}
 \title{calculate RGB vegetation indices}
 \usage{
-vegInd_RGB(rgb, indlist = "all")
+vegInd_RGB(rgb, red = NULL, green = NULL, blue = NULL, indlist = "all")
 }
 \arguments{
 \item{rgb}{a RasterStack or Brick with RGB bands}
+
+\item{red}{the band/layer number of band'red'}
+
+\item{green}{the band/layer number of band'green'}
+
+\item{blue}{the band/layer number of band'blue'}
 
 \item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
 "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further information)}
@@ -35,18 +41,19 @@ computes several Vegetation Indices based on RGB bands
 }
 }
 \note{
-notes if needed
+
 }
 \examples{
 ### load data
-rgb_path <-system.file("extdata","exp_rgb.tif",package = "LEGION")
-exp_rgb <- raster::stack(rgb_path)
+extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+mspec <- raster::stack(extpath)
+names(mspec)<- c("blue","green","red","nir")
 ### compute all vegetation indizes
-x <-LEGION::vegInd_RGB(exp_rgb)
+x <-LEGION::vegInd_RGB(mspec,3,2,1)
 plot(x)
 ### select specific vegetation indices
 vi <-c("VVI","SI","GLI")
-y <-LEGION::vegInd(exp_rgb,indlist=vi)
+y <-LEGION::vegInd_RGB(mspec,3,2,1,indlist=vi)
 plot(y)
 }
 \references{

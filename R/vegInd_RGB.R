@@ -1,6 +1,9 @@
 #' calculate RGB vegetation indices
 #' @description computes several Vegetation Indices based on RGB bands
 #' @param rgb a RasterStack or Brick with RGB bands
+#' @param red the band/layer number of band'red'
+#' @param green the band/layer number of band'green'
+#' @param blue the band/layer number of band'blue'
 #' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
 #' "VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further information)
 #' @return Returns a raster stack with the selected Vegetation Indices
@@ -17,25 +20,26 @@
 #' "TGI"
 #' "GLI"
 #' "NGRDI"
-#' @note notes if needed
+#' @note
 #' @author Andreas Schönberg
 #' @references
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)
 #' @examples
 #' ### load data
-#' rgb_path <-system.file("extdata","exp_rgb.tif",package = "LEGION")
-#' exp_rgb <- raster::stack(rgb_path)
+#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+#' mspec <- raster::stack(extpath)
+#' names(mspec)<- c("blue","green","red","nir")
 #' ### compute all vegetation indizes
-#' x <-LEGION::vegInd_RGB(exp_rgb)
+#' x <-LEGION::vegInd_RGB(mspec,3,2,1)
 #' plot(x)
 #' ### select specific vegetation indices
 #' vi <-c("VVI","SI","GLI")
-#' y <-LEGION::vegInd(exp_rgb,indlist=vi)
+#' y <-LEGION::vegInd_RGB(mspec,3,2,1,indlist=vi)
 #' plot(y)
 #' @export vegInd_RGB
 #' @aliases vegInd_RGB
 
-vegInd_RGB<- function(rgb,indlist="all"){
+vegInd_RGB<- function(rgb,red=NULL,green=NULL,blue=NULL,indlist="all"){
 
   ### check input
   if(any(indlist=="all")){
@@ -50,11 +54,12 @@ vegInd_RGB<- function(rgb,indlist="all"){
 
 
   #check if raster is an 3 band layer
-  if (raster::nlayers(rgb) != 3)
-    stop("Input raster has more or less than 3 bands")
-  red <- rgb[[1]]
-  green <- rgb[[2]]
-  blue <- rgb[[3]]
+  if (any(is.null(red),is.null(green),is.null(blue))==TRUE){
+    stop("no bands or less bands defined")
+  }
+  red <- rgb[[red]]
+  green <- rgb[[green]]
+  blue <- rgb[[blue]]
 
   #calculate selected indizes
   indices <- lapply(indlist, function(item){

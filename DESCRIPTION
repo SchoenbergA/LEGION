@@ -1,6 +1,6 @@
 Package: LEGION
 Title: artifically layer computing tool
-Version: 0.0.1.1
+Version: 0.0.99.0
 Authors@R: 
     person(given = "Andreas",
            family = "Schönberg",
@@ -12,6 +12,10 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

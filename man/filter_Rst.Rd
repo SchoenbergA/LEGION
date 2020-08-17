@@ -4,7 +4,7 @@
 \alias{filter_Rst}
 \title{filter single band raster}
 \usage{
-filter_Rst(rst, fLS = "all", sizes)
+filter_Rst(rst, fLS = "all", sizes, NArm = TRUE)
 }
 \arguments{
 \item{rst}{a single band raster layer}
@@ -14,6 +14,8 @@ filter_Rst(rst, fLS = "all", sizes)
 default = all (see details for further informations)}
 
 \item{sizes}{numeric values for the moving window, must be odd}
+
+\item{NArm}{remove NA values, default= TRUE}
 }
 \value{
 Returns a raster stack with the selected filters
@@ -27,6 +29,7 @@ calculates several filters for a single raster
 \item "sum" - Sum of all cells in Moving Window
 \item "min" - minimum value in Moving Window
 \item "max" - maximum value in Moving Window
+\item "mean"- mean of all cells in Moving Window
 \item "sd"  - standard deviation
 \item "modal" - modal
 \item "sobel" - sobel filter in horizontal and vertical directions
@@ -40,14 +43,17 @@ notes if needed
 }
 \examples{
 ### load data
-rst_path <-system.file("extdata","exp_rst.tif",package = "LEGION")
-exp_rst <- raster::raster(rst_path)
+extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+mspec <- raster::stack(extpath)
+names(mspec)<- c("blue","green","red","nir")
+### seperate single raster layer
+rst <- mspec$nir
 ### compute all filter
-x <- filter_Rst(exp_rst,sizes=c(3,5,7))
-plot(x[[]])
+x <- filter_Rst(rst,sizes=c(3,5,7))
+plot(x[[3]])
 ### compute specific filters
 flist <- c("modal","sobel_vert","mean")
-y <- filter_Rst(exp_rst,fLS=flist,sizes=c(3,5,7))
+y <- filter_Rst(rst,fLS=flist,sizes=c(3,5,7))
 }
 \seealso{
 \code{\link{focal}}

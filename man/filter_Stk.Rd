@@ -29,6 +29,7 @@ calculates several filters for each Single Raster in a RasterStack
 \item "sum" - Sum of all cells in Moving Window
 \item "min" - minimum value in Moving Window
 \item "max" - maximum value in Moving Window
+\item "mean"- mean of all cells in Moving Window
 \item "sd"  - standard deviation
 \item "modal" - modal
 \item "sobel" - sobel filter in horizontal and vertical directions
@@ -42,19 +43,19 @@ notes if needed
 }
 \examples{
 ### load data
-rgb_path <-system.file("extdata","exp_rgb.tif",package = "LEGION")
-exp_rgb <- raster::stack(rgb_path)
-### compute all filter
-x <- filter_Stk(exp_rgb,sizes=3)
-x
+extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
+mspec <- raster::stack(extpath)
+### compute all filters or every layer in stack
+x <- filter_Stk(mspec,sizes=3)
+x # note that the names are basic set x.1
+### define layernames
+ln <- c("blue","green","red","nir")
+z <- filter_Stk(mspec,fLS="sum",sizes=3,layernames=ln)
+names(z)
 ### compute specific filters
 flist <- c("modal","sobel_vert","mean")
-y <- filter_Stk(exp_rst,fLS=flist,sizes=c(3,5,7))
+y <- filter_Stk(mspec,fLS=flist,sizes=c(3,5,7))
 y
-### define layernames
-ln <-c("red","green","blue")
-z <- filter_Stk(exp_rgb,fLS="sum",sizes=3,layernames=ln)
-names(z)
 }
 \seealso{
 \code{\link{focal}},\code{\link{filter_Rst}}
