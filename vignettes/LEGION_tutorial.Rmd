@@ -1,8 +1,11 @@
 ---
 title: "LEGION_tutorial"
-author: "Andreas SChönberg"
+author: "Andreas Schönberg"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
+  theme: united
 
 vignette: >
   %\VignetteIndexEntry{LEGION_tutorial}
