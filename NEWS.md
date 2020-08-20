@@ -1,3 +1,6 @@
+# LEGION 0.0.99.1
+Some corrections 
+
 # LEGION 0.0.99.0
 Beta Version rdy to release 1.0
 * bugfixes
@@ -5,6 +8,7 @@ filter_Rst - fixed that sobel is not computed 2 times and added "mean" to docu.
 
 * new features
 add vignette with tutorial
+add all new examples using all the same data.
 
 
 # LEGION 0.0.1.2

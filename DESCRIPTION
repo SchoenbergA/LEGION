@@ -1,6 +1,6 @@
 Package: LEGION
 Title: artifically layer computing tool
-Version: 0.0.99.9
+Version: 0.0.99.1
 Authors@R: 
     person(given = "Andreas",
            family = "Schönberg",
