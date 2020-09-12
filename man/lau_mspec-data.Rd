@@ -3,10 +3,10 @@
 \docType{data}
 \name{lau_mspec - data}
 \alias{lau_mspec - data}
-\title{A multispectral image (RGB+nir) with some trees in the lautaret vally in the france alps.}
+\title{A multispectral image (RGB+NIR) with some trees in the Lautaret-valley in the French Alps.}
 \format{
 \code{"raster::raster"}
 }
 \description{
-An RGB orthophoto merged with the Nir band of a IRC image. Bands sequence is: 1-blue,2-green,3-red,4-nir. Resolution 0.15 meter.
+An RGB orthophoto merged with the NIR band of a IRC image. The bandsequence is: 1-blue, 2-green, 3-red, 4-nir, resolution 0.15 meter.
 }

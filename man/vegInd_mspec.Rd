@@ -2,7 +2,7 @@
 % Please edit documentation in R/vegInd_Nir.R
 \name{vegInd_mspec}
 \alias{vegInd_mspec}
-\title{calculate RGB+Nir vegetation indices}
+\title{Calculate RGB+Nir indices}
 \usage{
 vegInd_mspec(
   mspec,
@@ -14,29 +14,32 @@ vegInd_mspec(
 )
 }
 \arguments{
-\item{mspec}{a RasterStack or Brick with multispectral RGB+Nir bands}
+\item{mspec}{a RasterStack with RGB+Nir bands}
 
-\item{red}{the band/layer number of band'red'}
+\item{red}{the band/layer number of band 'red'}
 
-\item{green}{the band/layer number of band'green'}
+\item{green}{the band/layer number of band 'green'}
 
-\item{blue}{the band/layer number of band'blue'}
+\item{blue}{the band/layer number of band 'blue'}
 
-\item{nir}{the band/layer number of band'Near Infrared (nir)'}
+\item{nir}{the band/layer number of band 'Near Infrared (NIR)'}
 
-\item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
-"NDVI","TDVI","SR","MSR" default=all (see details for further information)}
+\item{indlist}{comma-separated character combinations of the desired indices. Select from
+"NDVI","TDVI","SR","MSR" default=all. See details}
 }
 \value{
-Returns a raster stack with the selected Vegetation Indices
+Returns a RasterStack with the selected indices
 }
 \description{
-computes several Vegetation Indices based on RGB bands
+computes several indices based on RGB bands
 }
 \details{
 \subsection{available indices}{
 
-"NDVI"
+"NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
+"TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
+"SR" - Simple Ratio; red/nir
+"MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
 }
 }
 \note{

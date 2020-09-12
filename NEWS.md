@@ -1,3 +1,8 @@
+# LEGION 0.0.99.2
+* major corrections
+spelling in function documnetation
+update tutorial - add brute force example
+
 # LEGION 0.0.99.1
 Some corrections 
 

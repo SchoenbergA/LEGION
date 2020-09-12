@@ -1,17 +1,20 @@
-#' calculate RGB+Nir vegetation indices
-#' @description computes several Vegetation Indices based on RGB bands
-#' @param mspec a RasterStack or Brick with multispectral RGB+Nir bands
-#' @param red the band/layer number of band'red'
-#' @param green the band/layer number of band'green'
-#' @param blue the band/layer number of band'blue'
-#' @param nir the band/layer number of band'Near Infrared (nir)'
-#' @param indlist comma separated character for desired Vegetation Indices to compute. Select from
-#' "NDVI","TDVI","SR","MSR" default=all (see details for further information)
-#' @return Returns a raster stack with the selected Vegetation Indices
+#' Calculate RGB+Nir indices
+#' @description computes several indices based on RGB bands
+#' @param mspec a RasterStack with RGB+Nir bands
+#' @param red the band/layer number of band 'red'
+#' @param green the band/layer number of band 'green'
+#' @param blue the band/layer number of band 'blue'
+#' @param nir the band/layer number of band 'Near Infrared (NIR)'
+#' @param indlist comma-separated character combinations of the desired indices. Select from
+#' "NDVI","TDVI","SR","MSR" default=all. See details
+#' @return Returns a RasterStack with the selected indices
 #' @details
 #' ## available indices
-#' "NDVI"
-
+#' "NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
+#' "TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
+#' "SR" - Simple Ratio; red/nir
+#' "MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
+#'
 #' @note notes if needed
 #' @author Andreas Schönberg
 #' @references

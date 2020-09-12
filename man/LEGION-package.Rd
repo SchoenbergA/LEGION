@@ -3,23 +3,22 @@
 \docType{package}
 \name{LEGION - package}
 \alias{LEGION - package}
-\title{LEGION - Artifically layers - a tool for computing several AL}
+\title{LEGION - a tool for computing several artificial layers (AL)}
 \description{
-In general the \code{LEGION} package provides tool to compute a huge stack of artifically layers
-to use in maschine learing or ordination/cluster analysis. Those methods require a lot of informations, the more the better (unless overfitting).
-With \code{LEGION} the user can first compute several indices and filters to generate artifically layers
-from just a RGB or multispectral image to use in maschine learing or ordination/cluster analysis.
-Further \code{LEGION} provides a function to detect higly correlating layers (which could lead to overfitting or just high time consumption in processing).
+In general the \code{LEGION} package provides tools to compute a huge stack of artifical layers
+to use in maschine learing or ordination/cluster analysis. These methods require lots of information, the more the better (unless it leads to overfitting).
+With \code{LEGION} the user can first compute several indices and apply filter to generate artifical layers of a RasterLayer or a RasterStack.
+Further \code{LEGION} provides a function to detect higly correlating layers (which could lead to overfitting and/or high computing time while processing).
 }
 \details{
-LEGION Artfically Layers
+LEGION
 }
 \note{
-In general a 'brute force' usage of \code{LEGION} is not recommended. EG to compute all available filters with sizes of 1 to 101 on all availbe indices would lead to hundreds artifally layers.
-This could take hours to days to compute (especially for large rasters) which makes little sense.
+In general a 'brute force' use of \code{LEGION} is not recommended. E.g. applying all available filters with multiple sizes of MovingWindows on all availabe indices would lead to multiple hundreds of artifal layers.
+This could take hours to days to compute (especially in the case of large RasterStacks) which makes little sense.
 
-But  \code{LEGION} helps to reduce "overthinking" in planning which ALs should be used for a maschine learing or ordination/cluster analysis task.
-A recommended way to generate a Stack with much information but less correlation in relatifly short time is to first generate the indices. Than to clean the Stack from correlating ALs and THAN to filter the cleaned Stack.
+On the other hand  \code{LEGION} helps to reduce "overthinking" in planning which ALs should be used for a maschine learing or ordination/cluster analysis task.
+A recommended way to generate a RasterStack with the required information but minimal correlation in a relatively short time is to first generate the indices and then to clean the RasterStack from correlating ALs and then successively to filter the cleaned RasterStack.
 }
 \author{
 Andreas Schönberg

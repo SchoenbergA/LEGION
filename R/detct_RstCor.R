@@ -1,17 +1,17 @@
-#' detect Raster Correlation
-#' @description detects Correlation of Rasterlayers in a RasterStack and returns a Rasterstack without the correlating Layers
+#' Detect Raster Correlation
+#' @description detects correlation of RasterLayers in a RasterStack
 #' @param Stk a RasterStack
-#' @param THvalue numeric in 0.X - Treshold Value for Correlation Value to drop Layers.
-#' @param returnCorTab boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE
+#' @param THvalue numeric as 0.X - treshold value for correlation value of correlating layers to drop correlating layers (see details).
+#' @param returnCorTab boolean - to return either the cleaned RasterStack (FALSE) or to return the correlationtable (TRUE); default= FALSE
 
 
-#' @return Returns a raster stack with the layers correlation less than the Treshold Value.
+#' @return returns a RasterStack with the layers correlating less than the treshold value.
 #' @details
-#' This function is used to test a RasterStack for correlating Layers. All layers which have a greater Correlation than the THvalue
-#' will be dropped from the Stack. E.G. if THvalue=0.9 all Layers with corvalues of >0.9 and <-0.9 will be dropped.
+#' This function is used to test a RasterStack on the correlation of the RasterLayers. All RasterLayers which have a higher correlation value than 'THvalue'
+#' will be dropped from the RasterStack. E.g. if THvalue=0.9 all RasterLayers with correlation values >0.9 and  < -0.9 will be dropped.
 #' @note
-#' * To perform a correlation Test all Values are cleaned from INF and or NA Values.
-#' * The output Stack is NOT cleaned from INF or NA Values.
+#' * To perform a correlation test all values are cleaned of INF and/or NA values.
+#' * The output RasterStack is NOT cleaned from INF and/or NA values.
 #' @author Andreas Schönberg
 #' @examples
 #' ### load data to compute RGB Indices

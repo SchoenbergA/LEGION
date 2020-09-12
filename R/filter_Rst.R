@@ -1,25 +1,23 @@
-#' filter single band raster
-#' @description calculates several filters for a single raster
-#' @param rst a single band raster layer
-#' @param fLS comma separated character for desired filter functions. Select from
-#' "sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel"
-#' default = all (see details for further informations)
-#' @param sizes numeric values for the moving window, must be odd
-#' @param NArm remove NA values, default= TRUE
-
-#' @return Returns a raster stack with the selected filters
+#' Filter Single-band RasterLayer
+#' @description applies several filter functions on single RasterLayer.
+#' @param rst a single-band RasterLayer.
+#' @param fLS comma-separated character combinations of the desired filter functions. Select from
+#' "sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert".
+#' default = all; (see details).
+#' @param sizes numeric - a single value or combinations  for the MovingWindow, number must be odd.
+#' @param NArm boolean - removes NA values, default= TRUE.
+#' @return returns a RasterStack with the desired filtered artificial layers.
 #' @details
-#' ## available filter methods
-#' * "sum" - Sum of all cells in Moving Window
-#' * "min" - minimum value in Moving Window
-#' * "max" - maximum value in Moving Window
-#' * "mean"- mean of all cells in Moving Window
-#' * "sd"  - standard deviation
-#' * "modal" - modal
-#' * "sobel" - sobel filter in horizontal and vertical directions
-#' * "sobel_hrzt" - horizontal only
-#' * "sobel_vert" - vertical only
-#' @note notes if needed
+#' ## available filter functions
+#' * "sum" - sum of all cells in a MovingWindow
+#' * "min" - minimum value of all cells in a MovingWindow
+#' * "max" - maximum value of all cells in a MovingWindow
+#' * "mean"- mean value of all cells in a MovingWindow
+#' * "sd"  - standard deviation of all cells in a MovingWindow
+#' * "modal" - most frequent value of all cells in a MovingWindow
+#' * "sobel" - sobel edge detection filter in horizontal and vertical directions
+#' * "sobel_hrzt" - sobel edge detection filter in horizontal direction only
+#' * "sobel_vert" - sobel edge detection filter in vertical direction only
 #' @author Andreas Schönberg
 #' @seealso \code{\link{focal}}
 #' @examples

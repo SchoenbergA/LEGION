@@ -2,46 +2,43 @@
 % Please edit documentation in R/vegInd_RGB.R
 \name{vegInd_RGB}
 \alias{vegInd_RGB}
-\title{calculate RGB vegetation indices}
+\title{Calculate RGB indices}
 \usage{
 vegInd_RGB(rgb, red = NULL, green = NULL, blue = NULL, indlist = "all")
 }
 \arguments{
-\item{rgb}{a RasterStack or Brick with RGB bands}
+\item{rgb}{a RasterStack with RGB bands}
 
-\item{red}{the band/layer number of band'red'}
+\item{red}{the band/layer number of band 'red'}
 
-\item{green}{the band/layer number of band'green'}
+\item{green}{the band/layer number of band 'green'}
 
-\item{blue}{the band/layer number of band'blue'}
+\item{blue}{the band/layer number of band 'blue'}
 
-\item{indlist}{comma separated character for desired Vegetation Indices to compute. Select from
-"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all (see details for further information)}
+\item{indlist}{comma-separated character combinations of the desired indices. Select from
+"VVI","VARI","NDTI","RI","CI","BI","SI","HI","TGI","GLI","NGRDI", default=all. See details}
 }
 \value{
-Returns a raster stack with the selected Vegetation Indices
+returns a RasterStack with the selected indices
 }
 \description{
-computes several Vegetation Indices based on RGB bands
+computes several indices based on RGB bands
 }
 \details{
 \subsection{available indices}{
 
-"VVI"
-"VARI"
-"NDTI"
-"RI"
-"CI"
-"BI"
-"SI"
-"HI"
-"TGI"
-"GLI"
-"NGRDI"
+"VVI" Visible Vegetation Index (1 - abs((red - 30) / (red + 30))) * (1 - abs((green - 50) / (green + 50))) \emph{(1 - abs((blue - 1) / (blue + 1)))
+"VARI" Visible Atmospherically Resistant Index (green-red)/(green+red-blue)
+"NDTI" Normalized Difference Turbidity Index (red-green)/(red+green)
+"RI" Redness index (red**2/(blue}green\strong{3)
+"CI" Soil Colour Index (red-green)/(red+green)
+"BI" Brightness Index sqrt((red}2+green**2+blue\emph{2)/3)
+"SI" Spectra Slope Saturation Index (red-blue)/(red+blue)
+"HI" Primary Colours Hue Index (2}red-green-blue)/(green-blue)
+"TGI" Triangular Greenness Index (-0.5*(190*(red - green)- 120*(red - blue))
+"GLI" Green Leaf Index (2\emph{green-red-blue)/(2}green+red+blue)
+"NGRDI" Normalized Green Red Difference Index (green-red)/(green+red)
 }
-}
-\note{
-
 }
 \examples{
 ### load data

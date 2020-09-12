@@ -2,44 +2,41 @@
 % Please edit documentation in R/filter_Rst.R
 \name{filter_Rst}
 \alias{filter_Rst}
-\title{filter single band raster}
+\title{Filter Single-band RasterLayer}
 \usage{
 filter_Rst(rst, fLS = "all", sizes, NArm = TRUE)
 }
 \arguments{
-\item{rst}{a single band raster layer}
+\item{rst}{a single-band RasterLayer.}
 
-\item{fLS}{comma separated character for desired filter functions. Select from
-"sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert","sobel"
-default = all (see details for further informations)}
+\item{fLS}{comma-separated character combinations of the desired filter functions. Select from
+"sum","min","max","sd","mean","modal","sobel","sobel_hrzt","sobel_vert".
+default = all; (see details).}
 
-\item{sizes}{numeric values for the moving window, must be odd}
+\item{sizes}{numeric - a single value or combinations  for the MovingWindow, number must be odd.}
 
-\item{NArm}{remove NA values, default= TRUE}
+\item{NArm}{boolean - removes NA values, default= TRUE.}
 }
 \value{
-Returns a raster stack with the selected filters
+returns a RasterStack with the desired filtered artificial layers.
 }
 \description{
-calculates several filters for a single raster
+applies several filter functions on single RasterLayer.
 }
 \details{
-\subsection{available filter methods}{
+\subsection{available filter functions}{
 \itemize{
-\item "sum" - Sum of all cells in Moving Window
-\item "min" - minimum value in Moving Window
-\item "max" - maximum value in Moving Window
-\item "mean"- mean of all cells in Moving Window
-\item "sd"  - standard deviation
-\item "modal" - modal
-\item "sobel" - sobel filter in horizontal and vertical directions
-\item "sobel_hrzt" - horizontal only
-\item "sobel_vert" - vertical only
+\item "sum" - sum of all cells in a MovingWindow
+\item "min" - minimum value of all cells in a MovingWindow
+\item "max" - maximum value of all cells in a MovingWindow
+\item "mean"- mean value of all cells in a MovingWindow
+\item "sd"  - standard deviation of all cells in a MovingWindow
+\item "modal" - most frequent value of all cells in a MovingWindow
+\item "sobel" - sobel edge detection filter in horizontal and vertical directions
+\item "sobel_hrzt" - sobel edge detection filter in horizontal direction only
+\item "sobel_vert" - sobel edge detection filter in vertical direction only
 }
 }
-}
-\note{
-notes if needed
 }
 \examples{
 ### load data
