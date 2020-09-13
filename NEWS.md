@@ -1,6 +1,7 @@
 # LEGION 0.0.99.2
 * major corrections
 spelling in function documnetation
+spelling in vignette (not for 'brute force' example)
 update tutorial - add brute force example
 
 # LEGION 0.0.99.1
