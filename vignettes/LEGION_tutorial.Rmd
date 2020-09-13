@@ -46,11 +46,11 @@ help(package="LEGION")
 
 ## Tutorial
 
-In general LEGION supports two major ways to compute a RasterStack with ALs. The first is to compute all possible indices and use all availbe filter functions on those indices. The only desicion would be the amount of the different MovingWindows for the filters. This desicion should be based on the extent of the Input RasterLayer. Finally the RasterStack should be cleaned up from correlating ALs. In this case no information would be lost but this could take a lot of time to comtue the RasterStack. If time does not play a big role (eg overnight usage) this way is recommended for best results.
+In general LEGION supports two major ways to compute a RasterStack with ALs. The first is to compute all possible indices and use all available filter functions on those indices. The only decision would be the amount of the different MovingWindows for the filters, based on the extent of the input RasterLayer. Finally the RasterStack should be cleaned from correlating ALs. In this case no information would be lost but this could take a lot of time to compute the RasterStack. If time does not play a big role (e.g. overnight processing) this way is recommended for best results.
 
-If time is essential or with big input data it could be helpful to reduce the amount of ALs which have to be computed. In this case the correlations should be detected before further processing BUT it is possible to lose some informations.
+If time is essential or with big input data it could be helpful to reduce the amount of ALs which have to be computed (second option). In this case the correlations should be detected before further processing the AL's BUT it is possible, information is going to be lost.
 
-This tutorial will lead you throught the 'fast' and comprehensible process of computing a RasterStack with several ALs with LEGION. Hereby we will start with just one input RasterLayer and 'form up a LEGION of ALs': the output RasterStack. Furthermore we will make sure that the output RasterStack is clean from highly correlating layers. (for the 'brute force approach' see respective chapter)
+This tutorial will lead you through the 'fast' and comprehensible process of computing a RasterStack with several ALs with LEGION. Hereby we will start with just one input RasterLayer and 'form up a LEGION of ALs': the output RasterStack. Furthermore we will make sure that the output RasterStack is clean from highly correlating layers. (For the 'brute force approach' see respective chapter at the end)
 
 ## Getting started
 
@@ -248,14 +248,14 @@ justcheckFINAL <- LEGION::detct_RstCor(finalStk,0.9)
 ```
 Lastly if we use the 'detct_RstCor' on our final RasterStack, exactly half of the RasterLayers are dropped. If we look at the correlation plot, we can see within the range of an index type some of the filters correlate.
 
-Its now up to you to decide to either keep the final Stack as it is or to reduce it.
-But finally our goal was to check for correlation between the available indices and filter functions. So to keep or drop ALs is NOT content of this Tutorial or the LEGION package.
+It's now up to you to decide to either keep the final RasterStack as it is or to reduce it.
+Finally our goal was to check for correlation between the available indices and filter functions. The (statistical) question about keeping or dropping ALs is NOT content of this Tutorial or the LEGION package.
 
 ## Brute force approach
 
-As mentioned in the beginning the 'fast' approach could lead to a lost of information due to the selection of indices and filters based on their correlations. It is possible that some of those ALs which have not been computed would lead to additional information and not be dropped in a final correlation detection. If time is not a big problem is t is possible to first compute all possible ALs and finally clean the Stack up from correlating Als. The code is quiet easy (but would take some time):
+As mentioned in the beginning the 'fast' approach could lead to loss of information due to the selection of indices and filters based on their correlations. It is possible that some of those ALs which have not been computed would lead to additional information and not be dropped in a final correlation detection. If time is not a big problem it is possible to first compute all possible ALs and finally clean the RasterStack from correlating ALs. The code is quite easy (but would take some time).
 
-NOTE the code is outcommended. Feel free to test the 'brute force' approach 'overnight' or with specific indices only (to save some time).
+NOTE the code is commented out. Feel free to test the 'brute force' approach 'overnight' or with specific indices only (to save some time).
 
 ``` {r, message=FALSE,warning=FALSE}
 ## compute all RGB indices

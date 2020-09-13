@@ -1,3 +1,6 @@
+# LEGION 0.1.0
+* release version for Github (not rdy for CRAN)
+
 # LEGION 0.0.99.2
 * major corrections
 spelling in function documnetation
