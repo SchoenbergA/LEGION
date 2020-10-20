@@ -10,8 +10,6 @@ detct_RstHmgy(Stk, THvalue)
 \item{Stk}{a RasterStack}
 
 \item{THvalue}{numeric  - in percent (0.x) Treshold Value for homogeneity Value to drop Layers.}
-
-\item{returnCorTab}{boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE}
 }
 \value{
 Returns the RasterStack without homogenious RasterLayers.

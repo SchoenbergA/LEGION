@@ -3,6 +3,7 @@ Development version for patch
 
 *bugfixes
 Now uses all depending packages in description.
+Some spelling corrections
 * new features
 detct_RstHgmy - function to detect homogeneity in RasterLayers.
 

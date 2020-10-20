@@ -2,7 +2,7 @@
 #' @description detects Correlation of Rasterlayers in a RasterStack and returns a Rasterstack without the correlating Layers
 #' @param Stk a RasterStack
 #' @param THvalue numeric in 0.X - Treshold Value for Correlation Value to drop Layers.
-#' @param returnCorTab boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE
+#' @param returnCorTab boolean - to return either the cleaned Stack (default=FALSE) or to return the Correlation Table with TRUE
 
 
 #' @return Returns a raster stack with the layers correlation less than the Treshold Value.
@@ -57,7 +57,7 @@ detct_RstCor <- function(Stk,THvalue,returnCorTab=FALSE){
   cat(paste("correlating layers detected"))
   # remove selected layers
   cat(" ",sep = "\n")
-  cat(paste("dropping from Stack:"))
+  cat(paste("dropping from Stack: "))
   cat(paste(lyrnames,collapse=", "),sep="\n")
   cat(" ",sep = "\n")
   cat("### LEGION finished Raster Correlation",sep="\n")

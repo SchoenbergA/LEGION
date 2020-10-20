@@ -11,7 +11,7 @@ detct_RstCor(Stk, THvalue, returnCorTab = FALSE)
 
 \item{THvalue}{numeric in 0.X - Treshold Value for Correlation Value to drop Layers.}
 
-\item{returnCorTab}{boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE}
+\item{returnCorTab}{boolean - to return either the cleaned Stack (default=FALSE) or to return the Correlation Table with TRUE}
 }
 \value{
 Returns a raster stack with the layers correlation less than the Treshold Value.

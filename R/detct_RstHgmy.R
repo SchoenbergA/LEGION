@@ -2,9 +2,6 @@
 #' @description detects homogeneity of Rasterlayers in a RasterStack and drops RasterLayers with homogeneity higher than a Treshold Value.
 #' @param Stk a RasterStack
 #' @param THvalue numeric  - in percent (0.x) Treshold Value for homogeneity Value to drop Layers.
-#' @param returnCorTab boolean - to return either the cleand Stack (default=FALSE) or to return the Correlation Table with TRUE
-
-
 #' @return Returns the RasterStack without homogenious RasterLayers.
 #' @details
 #' This function is used to test a RasterStack for homogenious RasterLayers. All RasterLayers with any values which represent more or equal percentage (THvalue) of all cells are dropped.
@@ -30,7 +27,7 @@
 #' hmgy90 <-detct_RstHmgy (x,1.0)
 #' hmgy90 # returns full RasterStack
 
-#' @export detct_RstHgmy
+#' @export detct_RstHmgy
 #' @aliases detct_RstHmgy
 
 detct_RstHmgy <- function(Stk,THvalue){
