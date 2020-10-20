@@ -1,3 +1,14 @@
+# LEGION 0.1.0.9
+Development version for patch
+
+*bugfixes
+Now uses all depending packages in description.
+* new features
+detct_RstHgmy - function to detect homogeneity in RasterLayers.
+
+# LEGION 0.1.0
+Release for install via Github version
+
 # LEGION 0.0.99.0
 Beta Version rdy to release 1.0
 * bugfixes
