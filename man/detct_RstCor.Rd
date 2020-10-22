@@ -9,9 +9,9 @@ detct_RstCor(Stk, THvalue, returnCorTab = FALSE)
 \arguments{
 \item{Stk}{a RasterStack}
 
-\item{THvalue}{numeric as 0.X - treshold value for correlation value of correlating layers to drop correlating layers (see details).}
+\item{THvalue}{numeric as 0.X - threshold value for correlation value of correlating layers to drop correlating layers (see details).}
 
-\item{returnCorTab}{boolean - to return either the cleaned RasterStack (FALSE) or to return the correlationtable (TRUE); default= FALSE}
+\item{returnCorTab}{boolean - to return either the cleaned RasterStack (FALSE) or to return the correlation table (TRUE); default= FALSE}
 }
 \value{
 returns a RasterStack with the layers correlating less than the treshold value.
