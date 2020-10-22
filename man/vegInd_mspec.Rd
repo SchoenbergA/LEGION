@@ -14,7 +14,7 @@ vegInd_mspec(
 )
 }
 \arguments{
-\item{mspec}{a RasterStack with RGB+Nir bands}
+\item{mspec}{a RasterStack with RGB+NIR bands}
 
 \item{red}{the band/layer number of band 'red'}
 
@@ -31,15 +31,16 @@ vegInd_mspec(
 Returns a RasterStack with the selected indices
 }
 \description{
-computes several indices based on RGB bands
+computes several indices based on RGB+NIR bands
 }
 \details{
 \subsection{available indices}{
-
-"NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
-"TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
-"SR" - Simple Ratio; red/nir
-"MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
+\itemize{
+\item "NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
+\item "TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
+\item "SR" - Simple Ratio; red/nir
+\item "MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
+}
 }
 }
 \note{

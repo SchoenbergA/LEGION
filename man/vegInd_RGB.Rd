@@ -26,18 +26,19 @@ computes several indices based on RGB bands
 }
 \details{
 \subsection{available indices}{
-
-"VVI" Visible Vegetation Index (1 - abs((red - 30) / (red + 30))) * (1 - abs((green - 50) / (green + 50))) \emph{(1 - abs((blue - 1) / (blue + 1)))
-"VARI" Visible Atmospherically Resistant Index (green-red)/(green+red-blue)
-"NDTI" Normalized Difference Turbidity Index (red-green)/(red+green)
-"RI" Redness index (red**2/(blue}green\strong{3)
-"CI" Soil Colour Index (red-green)/(red+green)
-"BI" Brightness Index sqrt((red}2+green**2+blue\emph{2)/3)
-"SI" Spectra Slope Saturation Index (red-blue)/(red+blue)
-"HI" Primary Colours Hue Index (2}red-green-blue)/(green-blue)
-"TGI" Triangular Greenness Index (-0.5*(190*(red - green)- 120*(red - blue))
-"GLI" Green Leaf Index (2\emph{green-red-blue)/(2}green+red+blue)
-"NGRDI" Normalized Green Red Difference Index (green-red)/(green+red)
+\itemize{
+\item "VVI" Visible Vegetation Index (1 - abs((red - 30) / (red + 30))) * (1 - abs((green - 50) / (green + 50))) *(1 - abs((blue - 1) / (blue + 1)))
+\item "VARI" Visible Atmospherically Resistant Index (green-red)/(green+red-blue)
+\item "NDTI" Normalized Difference Turbidity Index (red-green)/(red+green)
+\item "RI" Redness index (red\strong{2/(blue*green}3)
+\item "CI" Soil Colour Index (red-green)/(red+green)
+\item "BI" Brightness Index sqrt((red\strong{2+green}2+blue*2)/3)
+\item "SI" Spectra Slope Saturation Index (red-blue)/(red+blue)
+\item "HI" Primary Colours Hue Index (2*red-green-blue)/(green-blue)
+\item "TGI" Triangular Greenness Index (-0.5*(190*(red - green)- 120*(red - blue))
+\item "GLI" Green Leaf Index (2\emph{green-red-blue)/(2}green+red+blue)
+\item "NGRDI" Normalized Green Red Difference Index (green-red)/(green+red)
+}
 }
 }
 \examples{
