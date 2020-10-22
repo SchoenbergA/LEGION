@@ -1,5 +1,5 @@
 Package: LEGION
-Title: artifically layer computing tool
+Title: artifical layer computing tool
 Version: 0.1.1
 Authors@R: 
     person(given = "Andreas",

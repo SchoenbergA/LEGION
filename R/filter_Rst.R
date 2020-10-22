@@ -96,7 +96,7 @@ filter_Rst <- function(rst,fLS="all",sizes,NArm=TRUE){
     # sd filter
     else if (item=="sd"){
       cat(" ",sep = "\n")
-      cat("### LEGION calculating standart deviation filter ###",sep = "\n")
+      cat("### LEGION calculating standard deviation filter ###",sep = "\n")
       lapply(sizes,function(f){
         cat(paste0("### starting sd   ",as.factor(f),"*",as.factor(f),sep = "\n"))
         sdLS <- raster::focal(rst,w=matrix(1/(f*f),nrow=f,ncol=f),fun=sd,na.rm=NArm)
@@ -157,9 +157,9 @@ filter_Rst <- function(rst,fLS="all",sizes,NArm=TRUE){
 
     else if (item=="sobel_hrzt"){
       cat(" ",sep = "\n")
-      cat("### LEGION calculating sobel horizontale filter ###",sep = "\n")
+      cat("### LEGION calculating sobel horizontal filter ###",sep = "\n")
       lapply(sizes,function(f){
-        cat(paste0("### starting sobel horizontale  ",as.factor(f),"*",as.factor(f),sep = "\n"))
+        cat(paste0("### starting sobel horizontal  ",as.factor(f),"*",as.factor(f),sep = "\n"))
         range = f/2
         mx = matrix(nrow = f, ncol = f)
         my = mx
