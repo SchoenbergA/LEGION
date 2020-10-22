@@ -16,6 +16,8 @@
 #'
 #' @author Andreas Schönberg
 #' @import raster
+#' @import caret
+#' @import corrplot
 #' @keywords package
 NULL
 #' @docType data

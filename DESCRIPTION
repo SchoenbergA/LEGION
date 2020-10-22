@@ -1,6 +1,6 @@
 Package: LEGION
 Title: artifically layer computing tool
-Version: 0.1.0
+Version: 0.1.0.9
 Authors@R: 
     person(given = "Andreas",
            family = "Schönberg",
@@ -16,7 +16,7 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
 Imports:
-    raster
+    raster,corrplot,caret
 Suggests: 
     knitr,
     rmarkdown

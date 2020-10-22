@@ -1,3 +1,15 @@
+# LEGION 0.1.0.9
+develop version for patch 1.1
+
+*bugfixes
+Add dependecies
+some spelling corrections
+some cosmetic changes
+
+* new features
+detct_RstHmgy - detect homogenity in RasterLayer
+
+
 # LEGION 0.1.0
 * release version for Github (not rdy for CRAN)
 

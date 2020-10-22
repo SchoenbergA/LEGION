@@ -9,17 +9,17 @@
 #' @return returns a RasterStack with the selected indices
 #' @details
 #' ## available indices
-#' "VVI" Visible Vegetation Index (1 - abs((red - 30) / (red + 30))) * (1 - abs((green - 50) / (green + 50))) *(1 - abs((blue - 1) / (blue + 1)))
-#' "VARI" Visible Atmospherically Resistant Index (green-red)/(green+red-blue)
-#' "NDTI" Normalized Difference Turbidity Index (red-green)/(red+green)
-#' "RI" Redness index (red**2/(blue*green**3)
-#' "CI" Soil Colour Index (red-green)/(red+green)
-#' "BI" Brightness Index sqrt((red**2+green**2+blue*2)/3)
-#' "SI" Spectra Slope Saturation Index (red-blue)/(red+blue)
-#' "HI" Primary Colours Hue Index (2*red-green-blue)/(green-blue)
-#' "TGI" Triangular Greenness Index (-0.5*(190*(red - green)- 120*(red - blue))
-#' "GLI" Green Leaf Index (2*green-red-blue)/(2*green+red+blue)
-#' "NGRDI" Normalized Green Red Difference Index (green-red)/(green+red)
+#' * "VVI" Visible Vegetation Index (1 - abs((red - 30) / (red + 30))) * (1 - abs((green - 50) / (green + 50))) *(1 - abs((blue - 1) / (blue + 1)))
+#' * "VARI" Visible Atmospherically Resistant Index (green-red)/(green+red-blue)
+#' * "NDTI" Normalized Difference Turbidity Index (red-green)/(red+green)
+#' * "RI" Redness index (red**2/(blue*green**3)
+#' * "CI" Soil Colour Index (red-green)/(red+green)
+#' * "BI" Brightness Index sqrt((red**2+green**2+blue*2)/3)
+#' * "SI" Spectra Slope Saturation Index (red-blue)/(red+blue)
+#' * "HI" Primary Colours Hue Index (2*red-green-blue)/(green-blue)
+#' * "TGI" Triangular Greenness Index (-0.5*(190*(red - green)- 120*(red - blue))
+#' * "GLI" Green Leaf Index (2*green-red-blue)/(2*green+red+blue)
+#' * "NGRDI" Normalized Green Red Difference Index (green-red)/(green+red)
 #' @author Andreas Schönberg
 #' @references
 #' The IDB Project (2020): Index Database (https://www.indexdatabase.de/)

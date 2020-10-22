@@ -1,6 +1,6 @@
 #' Calculate RGB+Nir indices
-#' @description computes several indices based on RGB bands
-#' @param mspec a RasterStack with RGB+Nir bands
+#' @description computes several indices based on RGB+NIR bands
+#' @param mspec a RasterStack with RGB+NIR bands
 #' @param red the band/layer number of band 'red'
 #' @param green the band/layer number of band 'green'
 #' @param blue the band/layer number of band 'blue'
@@ -10,10 +10,10 @@
 #' @return Returns a RasterStack with the selected indices
 #' @details
 #' ## available indices
-#' "NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
-#' "TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
-#' "SR" - Simple Ratio; red/nir
-#' "MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
+#' * "NDVI" - Normalized Difference Vegetation Index; (nir-red)/(nir+red)
+#' * "TDVI" - Transformed Difference Vegetation Index; sqrt(0.5+(nir-red/nir+red))
+#' * "SR" - Simple Ratio; red/nir
+#' * "MSR" - Modified Simple Ratio; red/((nir/red+1)**0.5)
 #'
 #' @note notes if needed
 #' @author Andreas Schönberg
