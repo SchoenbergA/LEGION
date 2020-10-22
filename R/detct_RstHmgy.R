@@ -1,4 +1,4 @@
-#' detect Raster homogeneity
+#' detect Raster Homogeneity
 #' @description detects homogeneity of Rasterlayers in a RasterStack and drops RasterLayers with homogeneity higher than a Treshold Value.
 #' @param Stk a RasterStack
 #' @param THvalue numeric  - in percent (0.x) Treshold Value for homogeneity Value to drop Layers.
