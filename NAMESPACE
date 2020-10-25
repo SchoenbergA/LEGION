@@ -2,6 +2,7 @@
 
 export(detct_RstCor)
 export(detct_RstHmgy)
+export(detct_RstHmgy2)
 export(filter_Rst)
 export(filter_Stk)
 export(vegInd_RGB)
