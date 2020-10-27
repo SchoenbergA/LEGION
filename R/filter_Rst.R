@@ -22,8 +22,9 @@
 #' @seealso \code{\link{focal}}
 #' @examples
 #' ### load data
-#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
-#' mspec <- raster::stack(extpath)
+#' require(raster)
+#' require(LEGION)
+#' mspec <- raster::stack(system.file("extdata","lau_mspec.tif",package = "LEGION"))
 #' names(mspec)<- c("blue","green","red","nir")
 #' ### seperate single raster layer
 #' rst <- mspec$nir

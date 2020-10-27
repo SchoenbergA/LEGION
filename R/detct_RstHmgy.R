@@ -14,19 +14,20 @@
 #' @author Andreas Schönberg
 #' @examples
 #' ### load data
-#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
-#' mspec <- raster::stack(extpath)
+#' require(LEGION)
+#' require(raster)
+#' mspec <- raster::stack(system.file("extdata","lau_mspec.tif",package = "LEGION"))
 #' names(mspec)<- c("blue","green","red","nir")
 #' ### compute all vegetation indices
 #' x <-LEGION::vegInd_RGB(mspec,3,2,1)
 #' plot(x)
 #' ### homogenity if 90% of data represent 10% of the data range
 #' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
-#' hmgy90
 #' ### homogenity if 70% of data represent 10% of the data range
-#' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
+#' hmgy70 <-detct_RstHmgy (x,THvalue=0.7,valueRange=0.1)
 #' ### homogenity if 70% of data represent 5% of the data range
-#' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
+#' hmgy90 <-detct_RstHmgy (x,THvalue=0.7,valueRange=0.05)
+
 
 #' @export detct_RstHmgy
 #' @aliases detct_RstHmgy

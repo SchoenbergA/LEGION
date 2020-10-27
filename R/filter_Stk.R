@@ -22,8 +22,9 @@
 #' @seealso \code{\link{focal}},\code{\link{filter_Rst}}
 #' @examples
 #' ### load data
-#' extpath <-system.file("extdata","lau_mspec.tif",package = "LEGION")
-#' mspec <- raster::stack(extpath)
+#' require(raster)
+#' require(LEGION)
+#' mspec <- raster::stack(system.file("extdata","lau_mspec.tif",package = "LEGION"))
 #' ### compute all filters or every layer in stack
 #' x <- filter_Stk(mspec,sizes=3)
 #' x # note that the names are basic set x.1
