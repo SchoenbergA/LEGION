@@ -1,4 +1,4 @@
-# LEGION 0.1.1
+# LEGION 0.1.2
 patch version
 
 * new feature
@@ -11,7 +11,7 @@ Vignette is in html format availible via github.
 * bugfixes
 now uses direct loading of example data (instead of using a variable)
 
-# LEGION 0.1.0.9
+# LEGION 0.1.1
 develop version for patch 1.1
 
 *bugfixes
