@@ -2,12 +2,15 @@
 #' @description detects homogeneity of Rasterlayers in a RasterStack and drops RasterLayers with homogeneity higher than a set Threshold Value.
 #' @param Stk a RasterStack
 #' @param THvalue numeric  - in percent (0.x) Threshold Value for homogeneity Value to drop Layers.
+#' @param valueRange numeric - in percent (0.x) Range of Values with most data (see details).
 #' @return Returns the RasterStack without homogeneous RasterLayers.
 #' @details
-#' This function is used to test a RasterStack for homogeneous RasterLayers. All RasterLayers with any values which represent more or equal percentage (THvalue) of all cells are dropped.
-#' E.g. if a RasterLayer with ncell = 100 contains 95 cell with value 1 it will be dropped if the THvalue is 0.95 or less.
+#' This function is used to test a RasterStack for homogeneous RasterLayers.A RasterLayer is makred as homogenious if >= x% of the data is distributed in y % of the value range.
+#' E.G. If 90% (THvalue=0.9) of the Raster cells have values within 10% of the value range (valueRange=0.1) the RasterLayer is dropped if due to homogeneity.
 #' @note
-#' * The output Stack is NOT cleaned from INF or NA Values.
+#' * To perform the test for homogeneity the data is cleand from INF and NA values. Further the data will be normalized to set 100 breaks representing 1% of the data range.
+#'
+#' * The RasterLayers in the output Stack will be selected by their homogeneity and are NOT manipulated (not clean from INF or NA or normalized)
 #' @author Andreas Schönberg
 #' @examples
 #' ### load data
@@ -17,32 +20,61 @@
 #' ### compute all vegetation indices
 #' x <-LEGION::vegInd_RGB(mspec,3,2,1)
 #' plot(x)
-#' ### test for homogeneity with 90% occurrence of any cell value
-#' hmgy90 <-detct_RstHmgy (x,0.9)
+#' ### homogenity if 90% of data represent 10% of the data range
+#' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
 #' hmgy90
-#' ### test for homogeneity with 10% occurrence of any cell value
-#' hmgy10 <-detct_RstHmgy (x,0.1)
-#' hmgy10 # returns emtpy RasterStack
-#' ### test for homogeneity with 100% occurrence of any cell value
-#' hmgy90 <-detct_RstHmgy (x,1.0)
-#' hmgy90 # returns full RasterStack
+#' ### homogenity if 70% of data represent 10% of the data range
+#' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
+#' ### homogenity if 70% of data represent 5% of the data range
+#' hmgy90 <-detct_RstHmgy (x,THvalue=0.9,valueRange=0.1)
 
 #' @export detct_RstHmgy
 #' @aliases detct_RstHmgy
 
-detct_RstHmgy <- function(Stk,THvalue){
+
+detct_RstHmgy <- function(Stk,valueRange,THvalue){
   cat("### LEGION testing Raster homogeneity",sep="\n")
-
-
 
   # check all Rst for homogeneity
   hmgy <-lapply(1:nlayers(Stk), function(i){
-    histo <- hist(Stk[[i]],plot=FALSE)
-    Ncell <- ncell(Stk[[i]])
-    THcell<- Ncell*THvalue
-    if(any(histo$counts>=THcell)==TRUE){
+
+
+    # seperate single raster and get values
+    rst <- Stk[[i]]
+    nc <- ncell(rst)
+    val <- getValues(rst)
+    # handle inf
+    val[!is.finite(val)] <- NA
+    # handle NA
+    val <- val[!is.na(val)]
+    # normlaize
+    nmlz <- function(x){(x-min(x))/(max(x)-min(x))}
+    val_n <- nmlz(val)
+    # compute histogramm, breaks @ 1% of data
+
+    h <- hist(val_n,plot=F, breaks= seq(0,1,0.01))
+
+    # sort counts decreasing and get count in % of total cells
+    sh <-sort(h$counts,decreasing = T)/nc
+
+    vr <-round(sum(sh[1:(valueRange*100)]),digits = 4)
+    check <-vr>=THvalue
+
+    # compare amount of data in x % with THvalue
+
+    if(check==TRUE){
+      cat(" ",sep = "\n")
+      cat(names(Stk[[i]]),sep = "\n")
+      cat(paste("Layer has: ",round(vr*100,digits = 4),"% of values in",valueRange*100,"% of the value range ---> drop"))
+      cat(" ",sep = "\n")
       drop <- names(Stk[[i]])
+
+
     } else {
+      cat(" ",sep = "\n")
+      cat(names(Stk[[i]]),sep = "\n")
+      cat(paste("Layer has: ",round(vr*100,digits = 4),"% of values in",valueRange*100,"% of the value range ---> keep"))
+      cat(" ",sep = "\n")
       drop <- "NA"
     }
 

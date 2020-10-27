@@ -1,0 +1,181 @@
+---
+title: "LEGION_introduction"
+author: "Andreas Schönberg"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+  theme: united
+
+vignette: >
+  %\VignetteIndexEntry{LEGION_tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(fig.width = 5)
+```
+
+## Introduction
+
+### Background and Motivation
+
+For several spatial environmental tasks like ordination, cluster analysis and machine learning based classifications, artificial layers (further called 'ALs') are needed as predictors. These predictors should deliver as much information as possible without overfitting.
+
+LEGION is used to compute a huge Raster Stack of diffenrent ALs and further comes up with functions to "clean up" the RasterStack.
+LEGION delivers up to 15 different indices and 9 different spatial filter.
+
+### Install and get help
+
+First install the package and load it into the environment.
+NOTE: devtools package is necessary to install LEGION via Github.
+```{r, message = FALSE, warning=FALSE}
+#devtools::install_github("SchoenbergA/LEGION@master")
+require(LEGION)
+# load depending packages
+require(raster)
+```
+
+For help about the functions provided by LEGION see the help:
+
+```{r, message = FALSE, warning=FALSE}
+help(package="LEGION")
+```
+
+## Tutorial
+
+This tutorial will lead you thought the workflow to create a RasterStack with LEGION. In general the idea is to first compute all availble indices with all availible filter. Than the resulting RasterStack is tested for RasterLayers which could lead to problems in further processing by correlating or having homogenious values.
+
+Note that this tutorial will use a 'brute force' method which could take some processing time. To deliver a reproducible example we will use only selected ALs.
+
+## Getting started
+
+### First of all: the input data
+
+LEGION is created to create 'many from one', that means that it generates many ALs from just one input data source. So it is important to know where the data comes from. Usually it is some sort of aerial/satellite image. LEGION is made to support from drone derived orthoimages, over high resolution airborne orthoimages up to multispectral satellite imagery (like Sentinel 2a). However it is essential to know the band order. The workflow of LEGION is primarily based on RGB and additionally supports indices calculated with Near-Infrared (NIR) band - for multispectral satellite data, but (until now) LEGION does NOT support indices which use any other bands than RGB+NIR.
+
+### Example data
+
+The example data set is a RasterStack with the spectral bands red, green and blue from a high resolution (0.15 m) orthoimage. Further the NIR band has been utilized from an IRC (IR Composite) orthoimage with the same resolution. Note that the bands are sorted in the order 1=B, 2=G, 3=R, NIR=4. The bands are sorted as their band-order in satellite data. Further note: in unknown an data set RGB could mean the band-order 3,2,1 or 1,2,3.
+
+The example data depicts a treeline in the 'Lautaret valley' in the French-Alps
+
+Lets have a look!
+
+```{r, message=FALSE,warning=FALSE}
+
+mspec <- raster::stack(system.file("extdata","lau_mspec.tif",package = "LEGION"))
+# set names
+names(mspec)<- c("blue","green","red","nir")
+plotRGB(mspec,3,2,1)
+```
+The band combination (3,2,1) delivers the True Color Composite (TCC): a few trees with grass and bare soil.
+
+```{r, message=FALSE,warning=FALSE}
+plotRGB(mspec,4,3,2)
+```
+
+The band combination (4,3,2) delivers the IR Composite with the NIR band :-)
+
+## Compute Indices
+
+LEGION delivers functions to compute ALs in two subsequent ways: indices and filter.
+It is quite clear, that one first computes indices and THEN applies filters to them (because it makes nearly no sense to compute indices with filtered bands).
+
+Depending on our data set we can compute either 'RGB based indices' and/or (additionally) 'RGB+NIR based indices'. NOTE that if  'NIR' band is present in your data set, 'RGB+NIR based indices' AND 'RGB based indices' should be computed to generate a LEGION of ALs.
+
+In this tutorial we will use selected indices to save some processing time. In general it is recommended to compute all availible indices to generate the most ALs.
+```{r, message=FALSE,warning=FALSE,results='hide'}
+# define desired indices
+indList_rgb <- c("VVI","HI","RI","VARI")
+indList_NIR <- c("NDVI", "TDVI")
+# compute RGB and RGB+Nir(multispectral) indices
+rgbIND <- LEGION::vegInd_RGB(mspec,3,2,1,indlist=indList_rgb)
+rgbNIR <- LEGION::vegInd_mspec(mspec,3,2,1,4,indlist=indList_NIR)
+
+
+```
+
+Lets have a look at the resulting indices:
+
+```{r fig.height = 5, fig.width = 5, fig.align = "center",message=FALSE,warning=FALSE}
+par(mfrow=c(2,2))
+plot(rgbIND$VVI)
+plot(rgbIND$VARI)
+plot(rgbNIR$NDVI)
+plot(rgbNIR$TDVI)
+
+```
+Now lets put both RasterStacks together
+```{r, message=FALSE,warning=FALSE}
+# merge both RasterStacks in one RasterStack
+IndStk <- raster::stack(rgbIND,rgbNIR)
+names(IndStk) # check names
+nlayers(IndStk) # check amount of Layers
+```
+## Filter Usage
+
+LEGION provides 9 different filter functions: 'Sum', 'Minimum', 'Maximum', 'Mean', 'Standard deviation', 'Modal' and 'Sobel' (combined and separate horizontal/vertical). Each filter function uses a MovingWindow and requires odd values (e.g. 3, 5, 7 or 9). The only limitation for the filter sizes is the relation of the x and y axis of the input data.
+
+
+In this tutorial we will use selected filter with a MovingWindow of 3 and 5 to save some processing time. 
+```{r, message=FALSE,warning=FALSE, results='hide'}
+# compute selected Filters
+FilterStk <-LEGION::filter_Stk(IndStk,fLS = c("min","max","modal","sobel"), sizes=c(3,5))
+
+```
+Let's take a look what the ALs computed by the filter look like:
+```{r fig.height = 5, fig.width = 5, fig.align = "center",message=FALSE,warning=FALSE}
+par(mfrow=c(2,2))
+plot(FilterStk$VVI_modal3)
+plot(FilterStk$VVI_min5)
+plot(FilterStk$VVI_sobel3)
+plot(FilterStk$VVI_max3)
+
+```
+
+Now lets put both the indices and the filter together
+```{r, message=FALSE,warning=FALSE}
+# merge both RasterStacks in one RasterStack
+FullStk <- raster::stack(IndStk,FilterStk)
+names(FullStk) # check names
+nlayers(FullStk) # check amount of Layers
+```
+So even with selected indices and filter we now have computed a RasterStack with 54 ALs (from original 4 spectral bands). But before going on to furher processing (like a machine learning based classification) we should test if there are RasterLayers which could falsify the results of further processing or lead to unnecessary long processing times. Possible problems could be homogenious values and highly correlating RasterLayers. 
+
+## Raster Correlation
+
+Highly correlating RasterLayers would represent nearly the same information and could lead to long processing times for example in a forward feature selection.
+
+```{r, message=FALSE,warning=FALSE, results='hide'}
+# check for correlations
+
+corStk <- LEGION::detct_RstCor(FullStk,0.9)
+
+nlayers(corStk)
+
+```
+With a treshold value for correlation of 0.9 the RasterStack is reduced from 54 to 44 RasterLayers.
+
+## Raster Homogeneity
+
+It is possible that (especially some different filter) a RasterLayer contains a high amount of cells which represent a small range of the values (up to a RasterLayer with only 1 value for all cells). Such homogeneity could lead to problems especially with machine learing based classifications because those predictors could be selected by the algorithm to explain 100% of the classes.
+
+```{r, message=FALSE,warning=FALSE, results='hide'}
+# check for homogenious RasterLayers
+hmgyStk <- LEGION::detct_RstHmgy(corStk,THvalue=0.9,valueRange=0.1)
+
+nlayers(hmgyStk)
+
+```
+
+In total 17 RasterLayers have >90% of values in 10% of the value range.
+
+Now the final RasterStack is cleaned from correlations and homogeneous RasterLayers and ready to use in further processing.
+
+Keep in mind that we used 'only' selected indices and filter to save time. The usage of all available indices and filter could lead to more usable ALs. NOTE: For the 'clean up' the treshold values are subjectiv and several should be tested. Further it could be helpful to manual plot and compare conflicting ALs and drop or keep them by hand. Remeber that LEGION provides a statistical comprehensible workflow to compute and select ALs and return a stable RasterStack. 
+
+
+Best regards
+Andreas Schönberg

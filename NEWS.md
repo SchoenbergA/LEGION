@@ -1,3 +1,16 @@
+# LEGION 0.1.1
+patch version
+
+* new feature
+detct_RstHmgy - changed function. now normalize the data and computes 1% breaks in histogram. Additional now the range in which x % of data is detected can be selected.
+
+* new vignette
+created all new shorter introduction to LEGION.
+Vignette is in html format availible via github.
+
+* bugfixes
+now uses direct loading of example data (instead of using a variable)
+
 # LEGION 0.1.0.9
 develop version for patch 1.1
 
