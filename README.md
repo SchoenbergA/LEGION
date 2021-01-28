@@ -1,5 +1,5 @@
-## LEGION - Artifically layers computation
-This package is used to compute RasterStack with artifically layers. It delivers functions for diffenret indices and filter.
+## LEGION - artifically layers computation
+This package is used to compute RasterStack with artifically layers. It supports RGB and RGB + NIR indices and several spatila filter methods.
 
 For an introduction in LEGION see the vignette: LEGION_introduction.html
 
